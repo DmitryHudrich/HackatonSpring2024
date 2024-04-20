@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServerApp.Logic.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ServerApp.DataBase;
 
@@ -17,8 +18,13 @@ public class ApplicationContext : DbContext {
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         _ = modelBuilder.Entity<User>(
-            eb => {
-                _ = eb.Property(b => b.RegistrationDate).HasColumnType("timestamp(6)");
+            builder => {
+                _ = builder.ComplexProperty(user => user.AuthInfo);
+            });
+
+        _ = modelBuilder.Entity<User>(
+            builder => {
+                _ = builder.Property(b => b.RegistrationDate).HasColumnType("timestamp(6)");
             });
 
         _ = modelBuilder.Entity<Activity>(

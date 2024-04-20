@@ -7,6 +7,8 @@ public enum FindFilter {
 }
 
 public interface IUserStore {
-    Task<IReadOnlyList<User>> GetByFilter<T>(FindFilter filter, T request);
-
+    Task<IReadOnlyList<User>> GetByFilterAsync<T>(FindFilter filter, T request);
+    Task AddAsync(User user);
+    Task RemoveAsync(User user);
+    Task UpdateAsync(User oldUser, User newUser);
 }
