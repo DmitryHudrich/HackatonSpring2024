@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServerApp.Logic.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ServerApp.DataBase;
 
@@ -17,10 +16,20 @@ public class ApplicationContext : DbContext {
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        _ = modelBuilder.Entity<Activity>(
+            builder => {
+                _ = builder.ComplexProperty(activity => activity.ActivityInfo);
+            });
+
         _ = modelBuilder.Entity<User>(
             builder => {
                 _ = builder.ComplexProperty(user => user.AuthInfo);
             });
+
+        _ = modelBuilder.Entity<User>(
+                builder => {
+                    _ = builder.ComplexProperty(user => user.UserInfo);
+                });
 
         _ = modelBuilder.Entity<User>(
             builder => {

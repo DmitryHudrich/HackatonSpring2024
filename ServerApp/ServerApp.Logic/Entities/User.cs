@@ -5,7 +5,7 @@ namespace ServerApp.Logic.Entities;
 public class User {
     public long Id { get; set; }
 
-    public required string Name { get; set; }
+    public UserInfo UserInfo { get; set; } = null!;
     public string? Login { get; set; }
     public string? Password { get; set; }
     public ulong TelegramId { get; set; } = default;
@@ -29,4 +29,9 @@ public class User {
 public class AuthInfo {
     public bool Web { get; set; } = false;
     public bool Telegram { get; set; } = false;
+}
+
+public class UserInfo {
+    public string? Name { get; set; }
+    public string? Bio { get; set; }
 }
