@@ -23,7 +23,7 @@ async def generate_button_for_profile() -> InlineKeyboardBuilder.as_markup:
     bt_profile: InlineKeyboardBuilder = InlineKeyboardBuilder()
 
     bt_profile.row(
-        InlineKeyboardButton(text=f"📊 История мероприятий", callback_data="my_history_ntb"),
+        InlineKeyboardButton(text=f"📊 Мероприятия", callback_data="my_history_ntb"),
         InlineKeyboardButton(text=f"👥 Мои друзья", callback_data="my_friend_ntb"),
     )
     bt_profile.row(
