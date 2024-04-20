@@ -1,23 +1,20 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import {useCounterStore} from "@/stores/counter.js";
+import {onMounted} from "vue";
+import {Button} from "@/components/ui/button/index.js";
+const store = useCounterStore();
+
+onMounted(async () => {
+  await fetch("https://jsonplaceholder.typicode.com/todos/1")
+    .then(response => response.json())
+    .then(json => console.log(json))
+})
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <Button>VLivke</Button>
+<!--  <RouterView />-->
 </template>
 
 <style scoped>
