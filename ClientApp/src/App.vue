@@ -1,9 +1,6 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import {useCounterStore} from "@/stores/counter.js";
+// import { RouterLink, RouterView } from 'vue-router'
 import {onMounted} from "vue";
-import {Button} from "@/components/ui/button/index.js";
-const store = useCounterStore();
 
 onMounted(async () => {
   await fetch("https://jsonplaceholder.typicode.com/todos/1")
