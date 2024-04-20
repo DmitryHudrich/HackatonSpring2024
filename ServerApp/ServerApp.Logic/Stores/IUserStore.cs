@@ -17,4 +17,3 @@ public interface IUserStore {
     Task SyncWithTg(User user, long telegramId);
 }
 
-

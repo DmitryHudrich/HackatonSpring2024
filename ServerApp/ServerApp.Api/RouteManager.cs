@@ -16,6 +16,7 @@ internal static class RouteManager {
 
     public static void Auth() {
         _ = app.MapPost("/auth/registration", (RegistrationRequest dto) => {
+
         }).WithOpenApi(operation => new(operation) {
             Summary = "Register user with login and password",
             Description = "201 - if user created \n403 - otherwise"
@@ -45,7 +46,6 @@ internal static class RouteManager {
         _ = app.MapGet("/forswagger/dont/send/this/anywhere", (
                     [FromBody] SuccessLoginResponse one
                     ) => Results.NotFound());
-
 
         //
         _ = app.MapGet("/forswagger/dont/send/this/anywhere/q", (
