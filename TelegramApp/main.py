@@ -5,6 +5,7 @@ from handlers.user_handler import user_router
 from handlers.system_handler import system_router
 from handlers.profile_handler import profile_handler
 from utils.settings_bot import set_description_on_bot, set_short_description_on_bot, set_commands_on_bot
+from middleware.system_anti_spam import Throtling
 
 import asyncio
 import logging
@@ -16,7 +17,7 @@ async def start_application():
     """
 
 
-    bot: Bot = Bot(settings.telegram_api)
+    bot: Bot = Bot(await settings.telegram_api)
 
     storage: MemoryStorage = MemoryStorage()
     dp: Dispatcher = Dispatcher(bot=bot, storage=storage)
@@ -29,6 +30,9 @@ async def start_application():
     await set_commands_on_bot(bot=bot)
     await set_description_on_bot(bot=bot)
     await set_short_description_on_bot(bot=bot)
+
+    #Include middleware
+    dp.message.middleware.register(Throtling())
 
     try:
         await dp.start_polling(bot)
