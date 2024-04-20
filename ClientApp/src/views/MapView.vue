@@ -1,11 +1,9 @@
 <script setup>
-
+import YMap from '@/components/Map/YMap.vue';
 </script>
 
 <template>
-map
+  <YMap/>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

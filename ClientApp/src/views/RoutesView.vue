@@ -1,11 +1,5 @@
-<script setup>
+<script setup></script>
 
-</script>
+<template>routes</template>
 
-<template>
-routes
-</template>
-
-<style scoped>
-
-</style>
+<style scoped></style>

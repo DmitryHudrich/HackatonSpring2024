@@ -1,11 +1,5 @@
-<script setup>
+<script setup></script>
 
-</script>
+<template>friends</template>
 
-<template>
-friends
-</template>
-
-<style scoped>
-
-</style>
+<style scoped></style>

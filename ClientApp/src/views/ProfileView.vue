@@ -1,11 +1,5 @@
-<script setup>
+<script setup></script>
 
-</script>
+<template>user</template>
 
-<template>
- user
-</template>
-
-<style scoped>
-
-</style>
+<style scoped></style>

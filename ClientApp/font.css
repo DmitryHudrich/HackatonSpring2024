@@ -1,0 +1,66 @@
+@font-face {
+    font-family: "LoewNext";
+    font-weight: 300;
+    font-style: normal;
+    src: local('LoewNext'),
+        url('./assets/font/eot/LoewNext-Light.eot') format('eot'),
+        url('./assets/font/woff2/LoewNext-Light.woff2') format('woff2'),
+        url('./assets/font/woff/LoewNext-Light.woff') format('woff'),
+        url('./assets/font/ttf/LoewNext-Light.ttf') format('ttf');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "LoewNext";
+    font-weight: 400;
+    font-style: normal;
+    src: local('LoewNext'),
+        url('./assets/font/eot/LoewNext-Regular.eot') format('eot'),
+        url('./assets/font/woff2/LoewNext-Regular.woff2') format('woff2'),
+        url('./assets/font/woff/LoewNext-Regular.woff') format('woff'),
+        url('./assets/font/ttf/LoewNext-Regular.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: "LoewNext";
+    font-weight: 500;
+    font-style: normal;
+    src: local('LoewNext'),
+        url('./assets/font/eot/LoewNext-Medium.eot') format('eot'),
+        url('./assets/font/woff2/LoewNext-Medium.woff2') format('woff2'),
+        url('./assets/font/woff/LoewNext-Medium.woff') format('woff'),
+        url('./assets/font/ttf/LoewNext-Medium.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: "LoewNext";
+    font-weight: 700;
+    font-style: normal;
+    src: local('LoewNext'),
+        url('./assets/font/eot/LoewNext-Bold.eot') format('eot'),
+        url('./assets/font/woff2/LoewNext-Bold.woff2') format('woff2'),
+        url('./assets/font/woff/LoewNext-Bold.woff') format('woff'),
+        url('./assets/font/ttf/LoewNext-Bold.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: "LoewNext";
+    font-weight: 800;
+    font-style: normal;
+    src: local('LoewNext'),
+        url('./assets/font/eot/LoewNext-ExtraBold.eot') format('eot'),
+        url('./assets/font/woff2/LoewNext-ExtraBold.woff2') format('woff2'),
+        url('./assets/font/woff/LoewNext-ExtraBold.woff') format('woff'),
+        url('./assets/font/ttf/LoewNext-ExtraBold.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: "LoewNext";
+    font-weight: 900;
+    font-style: normal;
+    src: local('LoewNext'),
+        url('./assets/font/eot/LoewNext-Black.eot') format('eot'),
+        url('./assets/font/woff2/LoewNext-Black.woff2') format('woff2'),
+        url('./assets/font/woff/LoewNext-Black.woff') format('woff'),
+        url('./assets/font/ttf/LoewNext-Black.ttf') format('ttf');
+}

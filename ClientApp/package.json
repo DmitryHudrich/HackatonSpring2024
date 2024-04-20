@@ -21,7 +21,8 @@
     "tailwindcss-animate": "^1.0.7",
     "vaul-vue": "^0.1.0",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "ymaps": "^0.2.1"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",
@@ -33,7 +34,6 @@
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.3",
-    "vite": "^5.2.8",
-    "vite-plugin-vue-devtools": "^7.0.25"
+    "vite": "^5.2.8"
   }
 }

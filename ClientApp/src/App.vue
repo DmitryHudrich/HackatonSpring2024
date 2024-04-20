@@ -1,37 +1,43 @@
 <script setup>
 // import { RouterLink, RouterView } from 'vue-router'
-import {onMounted} from "vue";
-import Button from "@/components/ui/button/Button.vue";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle, }
-from '@/components/ui/card'
+import { onMounted, computed } from 'vue'
+import Header from '@/components/Header/MainHeader.vue'
+import Footer from '@/components/Footer/MainFooter.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const currentRoute = computed(() => route.name)
+const excludeRoutesList = ['login', 'register', 'hobby-picker']
+
+function switchTheme() {
+  document.getElementsByTagName('html')[0].classList.toggle('dark')
+}
 
 onMounted(async () => {
-  await fetch("https://jsonplaceholder.typicode.com/todos/1")
-    .then(response => response.json())
-    .then(json => console.log(json))
+  await fetch('https://jsonplaceholder.typicode.com/todos/1')
+    .then((response) => response.json())
+    .then((json) => console.log(json))
 })
 </script>
 
 <template>
-  <Card>
-    <CardHeader>
-      <CardTitle>Card title</CardTitle>
-      <CardDescription>Card description</CardDescription>
-    </CardHeader>
-    <CardContent>
-      <p>Card content</p>
-    </CardContent>
-  </Card>
-  <Button>VLivke</Button>
-  asdfgsfhgjkhjassdfkuylkjhgdfghjfkgjhgfbnfhytsdcvnhfvnmgfcjrgjfjvjfhgfh
-<!--  <RouterView />-->
-  <Card></Card>
+  <div id="app">
+    <div class="container">
+      <button @click="switchTheme()">theme</button>
+      <Header v-show="!excludeRoutesList.includes(currentRoute)" />
+      <router-view></router-view>
+      <Footer v-if="!(currentRoute === 'map')" />
+    </div>
+  </div>
 </template>
 
 <style scoped>
+#app {
+  background-color: var(--background);
+}
+
+.container {
+  margin-left: 80px;
+  margin-right: 80px;
+}
 </style>
