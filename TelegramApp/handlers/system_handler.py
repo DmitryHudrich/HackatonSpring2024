@@ -1,6 +1,6 @@
 from aiogram import Router, types
 from aiogram.filters.command import Command
-from aiogram.types import FSInputFile
+from aiogram.types import FSInputFile, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext 
 
 from text.text_for_commands import get_text_for_start, get_text_for_help, get_text_for_my_profile
@@ -66,7 +66,8 @@ async def clear_state_command(msg: types.Message, state: FSMContext):
     logging.info(msg="Обработка команды - clear")
     await state.clear()
     await msg.reply(
-        text=f"Все состояния были успешно сброшены 🔥"
+        text=f"Все состояния были успешно сброшены 🔥",
+        reply_markup=ReplyKeyboardRemove()
     )
 
 
