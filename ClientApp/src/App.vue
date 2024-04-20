@@ -1,6 +1,14 @@
 <script setup>
 // import { RouterLink, RouterView } from 'vue-router'
 import {onMounted} from "vue";
+import Button from "@/components/ui/button/Button.vue";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle, }
+from '@/components/ui/card'
 
 onMounted(async () => {
   await fetch("https://jsonplaceholder.typicode.com/todos/1")
@@ -10,70 +18,20 @@ onMounted(async () => {
 </script>
 
 <template>
+  <Card>
+    <CardHeader>
+      <CardTitle>Card title</CardTitle>
+      <CardDescription>Card description</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <p>Card content</p>
+    </CardContent>
+  </Card>
   <Button>VLivke</Button>
+  asdfgsfhgjkhjassdfkuylkjhgdfghjfkgjhgfbnfhytsdcvnhfvnmgfcjrgjfjvjfhgfh
 <!--  <RouterView />-->
+  <Card></Card>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
