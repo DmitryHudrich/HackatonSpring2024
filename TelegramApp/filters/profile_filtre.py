@@ -16,3 +16,15 @@ class ProfileFilter(BaseFilter):
         if data.data.endswith("ntb"):
             return True
         return False
+    
+
+
+class DeleteFilter(BaseFilter):
+    """
+        Processing btn to del user
+    """
+
+    async def __call__(self, data: types.Message) -> bool:
+        if data.data == "delete_profile":
+            return True
+        return False
