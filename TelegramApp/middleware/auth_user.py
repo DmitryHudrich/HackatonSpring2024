@@ -1,8 +1,8 @@
 from aiogram.dispatcher.middlewares.base import BaseMiddleware
 from typing import Callable, Dict, Any, Awaitable
 from aiogram import types
-from api.user_api import user_service
-
+from models.UserModels import RegistrationUser
+from api.user_api import UserService
 import logging
 
 
@@ -24,10 +24,17 @@ class AuthenticationUser(BaseMiddleware):
     async def auth_user(self, event: types.Message, handler, data: Dict[str, Any]):
 
         #Get user photo, id photo
-        id_photo_user = dict(dict(await event.from_user.get_profile_photos()).get("photos")[0][0]).get("file_id")
-        
-        #class for check user
-        user_service = user_service
-
+        #id_photo_user = dict(dict(await event.from_user.get_profile_photos()).get("photos")[0][0]).get("file_id")
 
         #CODE FOR AUTH user
+        user_reg_info: RegistrationUser = RegistrationUser(
+            telegramId=event.from_user.id,
+            firstname=event.from_user.first_name,
+            lastname=event.from_user.last_name if event.from_user.last_name else "",
+            bio=""
+        )
+
+        user_service: UserService = UserService()
+        result = user_service.get_user_token(user=user_reg_info)
+        print(result)
+        
