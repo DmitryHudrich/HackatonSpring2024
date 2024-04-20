@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -13,9 +14,11 @@ using ServerApp.DataBase;
 namespace ServerApp.DataBase.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240420220309_inisadtiasdaalasd")]
+    partial class inisadtiasdaalasd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -280,7 +283,7 @@ namespace ServerApp.DataBase.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("timestamp(6)");
 
-                    b.Property<long?>("RoleId")
+                    b.Property<long>("RoleId")
                         .HasColumnType("bigint");
 
                     b.Property<Point>("SearchGeoposition")
@@ -441,7 +444,9 @@ namespace ServerApp.DataBase.Migrations
                 {
                     b.HasOne("ServerApp.Logic.Entities.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });

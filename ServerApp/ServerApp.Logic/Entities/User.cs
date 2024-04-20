@@ -10,12 +10,12 @@ public class User {
     public string? Password { get; set; }
     public ulong TelegramId { get; set; } = default;
 
-    public required string PhotoBase64 { get; set; }
+    public string? PhotoBase64 { get; set; }
 
     public required DateTime RegistrationDate { get; set; }
     public required int Age { get; set; }
 
-    public required Role Role { get; set; }
+    public Role? Role { get; set; }
     public Point? SearchGeoposition { get; set; }
 
     public required AuthInfo AuthInfo { get; set; }

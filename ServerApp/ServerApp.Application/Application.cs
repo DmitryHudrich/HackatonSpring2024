@@ -1,23 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using ServerApp.Application.Services;
 using ServerApp.DataBase;
+using ServerApp.Logic.Stores;
 
 namespace ServerApp.Application;
 
 public sealed class Application(IServiceProvider services) {
     public IServiceProvider Services { get; set; } = services;
 
-    public static void SetServices(IServiceCollection services) {
-        _ = services.AddNpgsqlDataSource(
-            @"
-            Host=pg_server;
-            Username=test;
-            Password=test;
-            Database=test
-            ",
-            builder => builder
-                .UseNetTopologySuite());
+    public static void SetServices(ref IServiceCollection services) {
 
-        _ = services.AddDbContext<ApplicationContext>();
     }
 }
