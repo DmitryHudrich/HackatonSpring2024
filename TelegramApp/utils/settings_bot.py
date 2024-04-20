@@ -33,6 +33,7 @@ async def set_commands_on_bot(bot):
             BotCommand(command="help", description="Поддержка бота"),
             BotCommand(command="my_profile", description="Мой профиль"),
             BotCommand(command="clear", description="Очистка состояния"),
-            BotCommand(command="active_event", description="Активные мероприятия")
+            BotCommand(command="active_event", description="Активные мероприятия"),
+            BotCommand(command="create_review", description="Создание отзыва")
         ]
     ))
