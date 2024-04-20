@@ -2,22 +2,19 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ServerApp.Logic;
+using ServerApp.DataBase;
 
 #nullable disable
 
-namespace ServerApp.Logic.Migrations
+namespace ServerApp.DataBase.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240420044009_wsa")]
-    partial class wsa
+    partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +85,7 @@ namespace ServerApp.Logic.Migrations
 
                     b.Property<Point>("Geoposition")
                         .IsRequired()
-                        .HasColumnType("geography");
+                        .HasColumnType("geometry");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -216,7 +213,7 @@ namespace ServerApp.Logic.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<Point>("SearchGeoposition")
-                        .HasColumnType("geography");
+                        .HasColumnType("geometry");
 
                     b.HasKey("Id");
 

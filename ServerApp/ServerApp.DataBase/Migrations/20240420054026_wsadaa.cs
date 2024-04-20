@@ -5,10 +5,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace ServerApp.Logic.Migrations
+namespace ServerApp.DataBase.Migrations
 {
     /// <inheritdoc />
-    public partial class weqasasd : Migration
+    public partial class wsadaa : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using NetTopologySuite.Geometries;
+﻿using NetTopologySuite.Geometries;
 
 namespace ServerApp.Logic.Entities;
 
@@ -12,12 +11,10 @@ public class User {
 
     public required string PhotoBase64 { get; set; }
 
-    [Column(TypeName = "timestamp(6)")]
     public required DateTime RegistrationDate { get; set; }
     public required int Age { get; set; }
 
     public required Role Role { get; set; }
-    [Column(TypeName = "geometry (point)")]
     public Point? SearchGeoposition { get; set; }
 
     public List<FriendsPair> FriendRecievers { get; set; } = [];
@@ -51,13 +48,9 @@ public class Activity {
     public long Id { get; set; }
 
     public required string Name { get; set; }
-    [Column(TypeName = "geometry (point)")]
     public required Point Geoposition { get; set; }
-    [Column(TypeName = "timestamp(6)")]
     public required DateTime CreationTime { get; set; }
-    [Column(TypeName = "timestamp(6)")]
     public required DateTime WorkBegin { get; set; }
-    [Column(TypeName = "timestamp(6)")]
     public required DateTime WorkEnd { get; set; }
     public required bool CancelAge { get; set; } // what's this?
 

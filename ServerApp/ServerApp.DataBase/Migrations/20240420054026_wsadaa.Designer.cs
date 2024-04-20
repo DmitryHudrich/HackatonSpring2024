@@ -6,15 +6,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ServerApp.Logic;
+using ServerApp.DataBase;
 
 #nullable disable
 
-namespace ServerApp.Logic.Migrations
+namespace ServerApp.DataBase.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240420042107_weqasa")]
-    partial class weqasa
+    [Migration("20240420054026_wsadaa")]
+    partial class wsadaa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
