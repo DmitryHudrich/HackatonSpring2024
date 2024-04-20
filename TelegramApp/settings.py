@@ -18,6 +18,6 @@ class Settings:
         self.__limit_req = limit
 
     @property
-    async def telegram_api(self) -> str: return self.__telegram_api
+    def telegram_api(self) -> str: return self.__telegram_api
 
 settings = Settings()

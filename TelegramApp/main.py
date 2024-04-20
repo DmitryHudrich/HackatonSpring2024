@@ -12,17 +12,17 @@ import asyncio
 import logging
 
 
+bot: Bot = Bot(settings.telegram_api)
+storage: MemoryStorage = MemoryStorage()
+dp: Dispatcher = Dispatcher(bot=bot, storage=storage)
+
+
 async def start_application():
     """
-    
+
         Start Telegram bot
     """
 
-
-    bot: Bot = Bot(await settings.telegram_api)
-
-    storage: MemoryStorage = MemoryStorage()
-    dp: Dispatcher = Dispatcher(bot=bot, storage=storage)
 
     #Include routers
     dp.include_router(system_router)

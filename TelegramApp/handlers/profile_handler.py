@@ -65,12 +65,15 @@ async def get_name_organization_from_user(msg: types.Message, state: FSMContext)
     """
 
     logging.info(msg="Пользователь заполняет форму отзывов - заголовок отзыва")
-    await state.update_data(name_organization = msg.text)
-    await msg.answer(
-        text=f"💥 Отлично <b>{msg.from_user.first_name}</b>, пожалуйста опишите ваш отзыв",
-        parse_mode="HTML"
-    )
-    await state.set_state(ReviewState.description)
+    if msg.content_type == "text":
+        await state.update_data(name_organization = msg.text)
+        await msg.answer(
+            text=f"💥 Отлично <b>{msg.from_user.first_name}</b>, пожалуйста опишите ваш отзыв",
+            parse_mode="HTML"
+        )
+        await state.set_state(ReviewState.description)
+    else:
+        await msg.answer(text="Ожидается текст!")
 
 
 @profile_handler.message(ReviewState.description)
@@ -80,13 +83,17 @@ async def get_description_from_user(msg: types.Message, state: FSMContext) -> No
     """
 
     logging.info(msg="Пользователь заполняет форму отзывов - описание отзыва")
-    await state.update_data(description=msg.text)
-    await msg.answer(
-        text=f"💥 <b>Замечательно!</b> Пожалуйста выберите <i>утвердительную оценку</i>, вам понравилась данная организация?",
-        parse_mode="HTML",
-        reply_markup=await generate_button_for_review()
-    )
-    await state.set_state(ReviewState.like_or_not)
+
+    if msg.content_type == "text":
+        await state.update_data(description=msg.text)
+        await msg.answer(
+            text=f"💥 <b>Замечательно!</b> Пожалуйста выберите <i>утвердительную оценку</i>, вам понравилась данная организация?",
+            parse_mode="HTML",
+            reply_markup=await generate_button_for_review()
+        )
+        await state.set_state(ReviewState.like_or_not)
+    else:
+        await msg.answer("Ожидается текст!")
 
 
 @profile_handler.callback_query(lambda message: message.data.endswith("btn"))
