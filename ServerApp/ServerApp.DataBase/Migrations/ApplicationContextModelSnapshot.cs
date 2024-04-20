@@ -78,8 +78,8 @@ namespace ServerApp.DataBase.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<bool>("CancelAge")
-                        .HasColumnType("boolean");
+                    b.Property<int>("CancelAge")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp(6)");
@@ -87,6 +87,12 @@ namespace ServerApp.DataBase.Migrations
                     b.Property<Point>("Geoposition")
                         .IsRequired()
                         .HasColumnType("geometry");
+
+                    b.Property<bool>("IsExpired")
+                        .HasColumnType("boolean");
+
+                    b.Property<long?>("RouteId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("WorkBegin")
                         .HasColumnType("timestamp(6)");
@@ -108,6 +114,8 @@ namespace ServerApp.DataBase.Migrations
                         });
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RouteId");
 
                     b.ToTable("Activities");
                 });
@@ -172,6 +180,38 @@ namespace ServerApp.DataBase.Migrations
                     b.ToTable("Hobbies");
                 });
 
+            modelBuilder.Entity("ServerApp.Logic.Entities.Reviews", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp(6)");
+
+                    b.Property<bool>("IsGood")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("ServerApp.Logic.Entities.Role", b =>
                 {
                     b.Property<long>("Id")
@@ -187,6 +227,34 @@ namespace ServerApp.DataBase.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("ServerApp.Logic.Entities.Route", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp(6)");
+
+                    b.Property<long>("CreatorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Routes");
                 });
 
             modelBuilder.Entity("ServerApp.Logic.Entities.User", b =>
@@ -251,6 +319,32 @@ namespace ServerApp.DataBase.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("ServerApp.Logic.Entities.Visit", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ActivityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RouteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("VisitTime")
+                        .HasColumnType("timestamp(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("RouteId");
+
+                    b.ToTable("Visites");
+                });
+
             modelBuilder.Entity("ActivityActivityType", b =>
                 {
                     b.HasOne("ServerApp.Logic.Entities.Activity", null)
@@ -296,6 +390,13 @@ namespace ServerApp.DataBase.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ServerApp.Logic.Entities.Activity", b =>
+                {
+                    b.HasOne("ServerApp.Logic.Entities.Route", null)
+                        .WithMany("Activities")
+                        .HasForeignKey("RouteId");
+                });
+
             modelBuilder.Entity("ServerApp.Logic.Entities.FriendsPair", b =>
                 {
                     b.HasOne("ServerApp.Logic.Entities.User", "Reciever")
@@ -315,6 +416,28 @@ namespace ServerApp.DataBase.Migrations
                     b.Navigation("Sender");
                 });
 
+            modelBuilder.Entity("ServerApp.Logic.Entities.Reviews", b =>
+                {
+                    b.HasOne("ServerApp.Logic.Entities.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("ServerApp.Logic.Entities.Route", b =>
+                {
+                    b.HasOne("ServerApp.Logic.Entities.User", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("ServerApp.Logic.Entities.User", b =>
                 {
                     b.HasOne("ServerApp.Logic.Entities.Role", "Role")
@@ -324,6 +447,30 @@ namespace ServerApp.DataBase.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("ServerApp.Logic.Entities.Visit", b =>
+                {
+                    b.HasOne("ServerApp.Logic.Entities.Activity", "Activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServerApp.Logic.Entities.Route", "Route")
+                        .WithMany()
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("Route");
+                });
+
+            modelBuilder.Entity("ServerApp.Logic.Entities.Route", b =>
+                {
+                    b.Navigation("Activities");
                 });
 
             modelBuilder.Entity("ServerApp.Logic.Entities.User", b =>

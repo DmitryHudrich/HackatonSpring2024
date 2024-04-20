@@ -9,8 +9,8 @@ async def generate_button_for_review() -> InlineKeyboardBuilder.as_markup:
 
     bt_review_like: InlineKeyboardBuilder = InlineKeyboardBuilder()
 
-    bt_review_like.add(InlineKeyboardButton(text=f"{emojize(':heavy_check_mark:', language='en')} Да", callback_data="yep_btn"))
-    bt_review_like.add(InlineKeyboardButton(text=f"{emojize(':x:', language='en')} Нет", callback_data="nope_btn"))
+    bt_review_like.add(InlineKeyboardButton(text=f"🔥 Да", callback_data="yep_btn"))
+    bt_review_like.add(InlineKeyboardButton(text=f"💧 Нет", callback_data="nope_btn"))
 
     return bt_review_like.as_markup()
 
@@ -23,7 +23,7 @@ async def generate_button_for_profile() -> InlineKeyboardBuilder.as_markup:
     bt_profile: InlineKeyboardBuilder = InlineKeyboardBuilder()
 
     bt_profile.row(
-        InlineKeyboardButton(text=f"📊 История мероприятий", callback_data="my_history_ntb"),
+        InlineKeyboardButton(text=f"📊 Мероприятия", callback_data="my_history_ntb"),
         InlineKeyboardButton(text=f"👥 Мои друзья", callback_data="my_friend_ntb"),
     )
     bt_profile.row(

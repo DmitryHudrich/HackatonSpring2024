@@ -10,11 +10,18 @@ services:
       - 80:80
     depends_on:
       - postgres
-  
+
   postgres:
     image: postgis/postgis:16-3.4
     environment:
       - POSTGRES_PASSWORD=12345
     ports:
       - 5432:5432
+
+  serverapp:
+    build: ServerApp/
+    environment:
+      - PROD_CONTAINER=PROD
+    ports:
+      - 1488:8080
 

@@ -9,6 +9,7 @@ class Settings:
 
     __telegram_api: Final[str] = os.getenv("TELEGRAM_API")
     __limit_req: int = 2
+    __api_url: str = os.getenv("API_URL")
 
     @property
     def limit_req(self) -> int: return self.__limit_req
@@ -18,6 +19,9 @@ class Settings:
         self.__limit_req = limit
 
     @property
-    async def telegram_api(self) -> str: return self.__telegram_api
+    def telegram_api(self) -> str: return self.__telegram_api
+
+    @property
+    def api_url(self) -> str: return self.__api_url
 
 settings = Settings()
