@@ -3,6 +3,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from settings import settings
 from handlers.user_handler import user_router
 from handlers.system_handler import system_router
+from handlers.profile_handler import profile_handler
 from utils.settings_bot import set_description_on_bot, set_short_description_on_bot, set_commands_on_bot
 
 import asyncio
@@ -22,12 +23,13 @@ async def start_application():
 
     #Include routers
     dp.include_router(system_router)
+    dp.include_router(profile_handler)
     dp.include_router(user_router)
 
     await set_commands_on_bot(bot=bot)
     await set_description_on_bot(bot=bot)
     await set_short_description_on_bot(bot=bot)
-    
+
     try:
         await dp.start_polling(bot)
     except KeyboardInterrupt as kb:
