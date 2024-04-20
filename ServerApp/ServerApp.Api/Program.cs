@@ -1,14 +1,17 @@
 ﻿using System.Reflection;
 using Microsoft.OpenApi.Models;
-using NetTopologySuite.Geometries;
 using ServerApp.Api;
-using ServerApp.Logic;
-using ServerApp.Logic.Entities;
+using ServerApp.Application;
 
+
+System.Console.WriteLine(System.Environment.GetEnvironmentVariable("PROD_CONTAINER"));
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+Application.SetServices(builder.Services);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
     options.SwaggerDoc("v1", new OpenApiInfo {
@@ -35,6 +38,8 @@ builder.Services.AddCors();
 
 var app = builder.Build();
 
+var core = new Application(app.Services);
+
 app.UseCors(options => {
     _ = options.AllowAnyHeader();
     _ = options.AllowAnyMethod();
@@ -42,11 +47,10 @@ app.UseCors(options => {
 });
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) {
-    _ = app.UseSwagger();
+if (app.Environment.IsDevelopment() || System.Environment.GetEnvironmentVariable("PROD_CONTAINER") == "PROD") {
+    _ = app.UseSwagger(); _ = app.UseSwaggerUI();
     _ = app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 
 RouteManager.SetEndpoints(app);

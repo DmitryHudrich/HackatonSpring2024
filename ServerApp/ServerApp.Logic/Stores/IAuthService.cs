@@ -1,6 +1,6 @@
 ﻿namespace ServerApp.Logic.Stores;
 
-public interface IAuthService {
-    Task Register(string login, string password, );
+public interface IAuthService<TResultInfo> {
+    Task<IInteractResult<TResultInfo>> Register(string login, string password);
 }
 

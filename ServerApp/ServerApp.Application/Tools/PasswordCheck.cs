@@ -10,7 +10,6 @@ public enum PasswordCheckTroubles {
 public static class PasswordChecker {
     public static (bool, List<PasswordCheckTroubles>) Check(string password) {
         var troubles = new List<PasswordCheckTroubles>();
-        var isVerify = false;
 
         if (password.Length < 8) {
             troubles.Add(PasswordCheckTroubles.TooShort);

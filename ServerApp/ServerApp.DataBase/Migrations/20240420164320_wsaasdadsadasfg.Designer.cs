@@ -14,8 +14,8 @@ using ServerApp.DataBase;
 namespace ServerApp.DataBase.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240420144452_wsaasdadasfg")]
-    partial class wsaasdadasfg
+    [Migration("20240420164320_wsaasdadsadasfg")]
+    partial class wsaasdadsadasfg
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -181,6 +181,38 @@ namespace ServerApp.DataBase.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Hobbies");
+                });
+
+            modelBuilder.Entity("ServerApp.Logic.Entities.Reviews", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp(6)");
+
+                    b.Property<bool>("IsGood")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("ServerApp.Logic.Entities.Role", b =>
@@ -385,6 +417,17 @@ namespace ServerApp.DataBase.Migrations
                     b.Navigation("Reciever");
 
                     b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("ServerApp.Logic.Entities.Reviews", b =>
+                {
+                    b.HasOne("ServerApp.Logic.Entities.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("ServerApp.Logic.Entities.Route", b =>
