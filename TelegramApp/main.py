@@ -15,7 +15,8 @@ async def start_application():
     """
 
 
-    bot: Bot = Bot(settings.telegram_api, parse_mode="HTML")
+    bot: Bot = Bot(settings.telegram_api)
+
     storage: MemoryStorage = MemoryStorage()
     dp: Dispatcher = Dispatcher(bot=bot, storage=storage)
 
@@ -23,10 +24,10 @@ async def start_application():
     dp.include_router(system_router)
     dp.include_router(user_router)
 
-    await set_short_description_on_bot(bot=bot)
-    await set_description_on_bot(bot=bot)
     await set_commands_on_bot(bot=bot)
-
+    await set_description_on_bot(bot=bot)
+    await set_short_description_on_bot(bot=bot)
+    
     try:
         await dp.start_polling(bot)
     except KeyboardInterrupt as kb:

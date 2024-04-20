@@ -27,3 +27,16 @@ async def get_text_for_help(user_name: str) -> List[str]:
     ]
 
     return lst_text_for_hlp_cmd
+
+
+async def get_text_for_my_profile(user_name: str) -> List[str]:
+    """
+        Returned list with text for my_profile command
+    """
+
+    lst_text_for_profile: List = [
+        f"{user_name}, <i><b>добро пожаловать</b></i> в личный профиль.\n",
+        "Здесь ты можешь просматривать личную информацию о себе, историю своих посещений, своих друзей."
+    ]
+
+    return lst_text_for_profile
