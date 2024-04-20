@@ -5,7 +5,8 @@
     <ProjectReference Include="..\ServerApp.DataBase\ServerApp.DataBase.csproj" />
   </ItemGroup>
 
-  <PropertyGroup>
+  <PropertyGroup>  
+    <NoWarn>$(NoWarn);1591</NoWarn>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>

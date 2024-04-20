@@ -4,6 +4,12 @@ using ServerApp.Logic.Stores.Filters;
 
 namespace ServerApp.Application;
 
+public class UserAuth : IAuthService {
+    public Task Register(string login, string password) {
+
+    }
+}
+
 public class UserStore : IUserStore {
     public Task AddAsync(User user) {
         throw new NotImplementedException();
