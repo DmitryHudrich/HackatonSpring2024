@@ -23,7 +23,8 @@ async def get_text_for_help(user_name: str) -> List[str]:
         f"Добро пожаловать в пункт поддержки бота {user_name} {emojize(':raised_hand:', language='en')}\n",
         "Мой перечень команд: ",
         f"{emojize(':first_quarter_moon:', language='en')}\t/start - Запуск бота",
-        f"{emojize(':waxing_crescent_moon:', language='en')}\t/help - Пункт поддержки"
+        f"{emojize(':waxing_crescent_moon:', language='en')}\t/help - Пункт поддержки",
+        f"{emojize(':waxing_crescent_moon:', language='en')}\t/clear - Очистка состояния"
     ]
 
     return lst_text_for_hlp_cmd

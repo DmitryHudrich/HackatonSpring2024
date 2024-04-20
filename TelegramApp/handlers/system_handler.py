@@ -1,6 +1,7 @@
 from aiogram import Router, types
 from aiogram.filters.command import Command
 from aiogram.types import FSInputFile
+from aiogram.fsm.context import FSMContext 
 
 from text.text_for_commands import get_text_for_start, get_text_for_help, get_text_for_my_profile
 from keyboard.inline_btn import generate_button_for_profile
@@ -48,4 +49,16 @@ async def my_profile_command(msg: types.Message) -> None:
         text=for_message_profile,
         reply_markup=await generate_button_for_profile(),
         parse_mode="HTML"
+    )
+
+
+@system_router.message(Command("clear"))
+async def clear_state_command(msg: types.Message, state: FSMContext):
+    """
+        Clear all states
+    """
+
+    await state.clear()
+    await msg.reply(
+        text=f"Все состояния были успешно сброшены 🔥"
     )

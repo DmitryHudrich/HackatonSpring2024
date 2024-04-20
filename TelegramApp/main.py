@@ -1,4 +1,5 @@
 from aiogram import Bot, Dispatcher
+from aiogram.types import InputFile
 from aiogram.fsm.storage.memory import MemoryStorage
 from settings import settings
 from handlers.user_handler import user_router
@@ -30,6 +31,10 @@ async def start_application():
     await set_commands_on_bot(bot=bot)
     await set_description_on_bot(bot=bot)
     await set_short_description_on_bot(bot=bot)
+    #await set_photo_on_bot(bot=bot)
+
+    #Delete last messages
+    await bot.delete_webhook(drop_pending_updates=True)
 
     #Include middleware
     dp.message.middleware.register(Throtling())
@@ -37,6 +42,7 @@ async def start_application():
     try:
         await dp.start_polling(bot)
     except KeyboardInterrupt as kb:
+        await bot.close()
         logging.critical(msg="Бот окончил своб работу")
 
 

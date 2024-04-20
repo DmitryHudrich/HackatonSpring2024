@@ -8,7 +8,7 @@ if os.getenv("ISCONTAINER") != "TRUE":
 class Settings:
 
     __telegram_api: Final[str] = os.getenv("TELEGRAM_API")
-    __limit_req: int = 8
+    __limit_req: int = 2
 
     @property
     def limit_req(self) -> int: return self.__limit_req

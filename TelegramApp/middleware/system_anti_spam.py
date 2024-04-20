@@ -11,7 +11,7 @@ class Throtling(BaseMiddleware):
     """
 
     def __init__(self, limit_req: int = settings.limit_req) -> None:
-        self.limit_req = cachetools.TTLCache(maxsize=8_000, ttl=limit_req)
+        self.limit_req = cachetools.TTLCache(maxsize=10_000, ttl=limit_req)
 
         
 
