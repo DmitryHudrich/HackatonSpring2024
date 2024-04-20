@@ -16,6 +16,7 @@ internal static class RouteManager {
 
     public static void Auth() {
         _ = app.MapPost("/auth/registration", (RegistrationRequest dto) => {
+
         }).WithOpenApi(operation => new(operation) {
             Summary = "Register user with login and password",
             Description = "201 - if user created \n403 - otherwise"
@@ -35,17 +36,16 @@ internal static class RouteManager {
             });
 
         _ = app.MapPost("/auth/registration/telegram", (TelegramRegistrationRequest dto) => Results.NotFound(new TelegramRegistrationRequest(0)))
-   .WithOpenApi(operation => new(operation) {
-       Summary = "Register user with telegram id",
-       Description = $"always 200. sends jwt in body in refresh in {Constants.REFRESH_COOKIE} cookie"
-   });
+            .WithOpenApi(operation => new(operation) {
+                Summary = "Register user with telegram id",
+                Description = $"always 200. sends jwt in body in refresh in {Constants.REFRESH_COOKIE} cookie"
+            });
         _ = app.MapPut("/auth/sync/telegram", (TelegramSyncRequest dto) => Results.NoContent());
 
         //
         _ = app.MapGet("/forswagger/dont/send/this/anywhere", (
                     [FromBody] SuccessLoginResponse one
                     ) => Results.NotFound());
-
 
         //
         _ = app.MapGet("/forswagger/dont/send/this/anywhere/q", (
@@ -57,6 +57,7 @@ internal static class RouteManager {
         _ = app.MapGet("/user/{id}", (long id) =>
                 Results.NotFound("200 - if user was found and returns UserDataResponse; 400 - otherwise"));
 
-        _ = app.MapGet("/user/{id}/friends", () => Results.NotFound(new Friends([]));
+        _ = app.MapGet("/user/{id}/friends", () => Results.NotFound(new FriendsResponse([])));
+
     }
 }
