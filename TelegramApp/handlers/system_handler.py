@@ -16,7 +16,7 @@ async def start_command(msg: types.Message) -> None:
 
     for_message_start: str = "\n".join(await get_text_for_start(msg.from_user.first_name))
     await msg.answer_animation(
-        animation=FSInputFile("TelegramApp/static/0003.gif"),
+        animation=FSInputFile("TelegramApp/static/start.gif"),
         caption=for_message_start
     )
 
