@@ -10,6 +10,8 @@ public class ApplicationContext : DbContext {
     public DbSet<Role> Roles { get; set; } = null!;
     public DbSet<Activity> Activities { get; set; } = null!;
     public DbSet<ActivityType> ActivityTypes { get; set; } = null!;
+    public DbSet<Visit> Visites { get; set; }
+    public DbSet<Route> Routes { get; set; }
 
     public ApplicationContext() {
         _ = Database.EnsureCreated();
@@ -34,6 +36,17 @@ public class ApplicationContext : DbContext {
         _ = modelBuilder.Entity<User>(
             builder => {
                 _ = builder.Property(b => b.RegistrationDate).HasColumnType("timestamp(6)");
+            });
+
+        _ = modelBuilder.Entity<Visit>(
+            builder => {
+                builder.Property(b => b.VisitTime).HasColumnType("timestamp(6)");
+            });
+
+        _ = modelBuilder.Entity<Route>(
+            builder => {
+                builder.Property(b => b.CreationDate).HasColumnType("timestamp(6)");
+                builder.Property(b => b.StartTime).HasColumnType("timestamp(6)");
             });
 
         _ = modelBuilder.Entity<Activity>(
