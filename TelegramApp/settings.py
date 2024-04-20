@@ -2,7 +2,8 @@ from dotenv import load_dotenv
 import os
 from typing import Final
 
-load_dotenv()
+if os.getenv("ISCONTAINER") != "TRUE":
+    load_dotenv()
 
 class Settings:
 
