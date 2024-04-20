@@ -10,7 +10,8 @@ public class Activity {
     public required DateTime CreationTime { get; set; }
     public required DateTime WorkBegin { get; set; }
     public required DateTime WorkEnd { get; set; }
-    public required bool CancelAge { get; set; } // what's this?
+    public required int CancelAge { get; set; }
+    public bool IsExpired { get; set; }
 
     public List<ActivityType> Types { get; set; } = [];
 }
