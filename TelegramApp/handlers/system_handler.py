@@ -62,3 +62,17 @@ async def clear_state_command(msg: types.Message, state: FSMContext):
     await msg.reply(
         text=f"Все состояния были успешно сброшены 🔥"
     )
+
+
+@system_router.message(Command("active_event"))
+async def activate_event_command(msg: types.Message):
+    """
+        Select all activate events for user
+    """
+
+    events = ... #Заглушка
+
+    await msg.answer(
+        text=f"🔥 Список <b>активных</b> мероприятий: ",
+        parse_mode="HTML"
+    )

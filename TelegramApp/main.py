@@ -14,6 +14,7 @@ import logging
 
 async def start_application():
     """
+    
         Start Telegram bot
     """
 
