@@ -1,6 +1,6 @@
 <script setup>
-  import FriendList from '@/components/FriendList/FriendList.vue';
-  import NewFriendSearch from '@/components/NewFriendSearch/NewFriendSearch.vue';
+import FriendList from '@/components/FriendList/FriendList.vue'
+import NewFriendSearch from '@/components/NewFriendSearch/NewFriendSearch.vue'
 </script>
 
 <template>
@@ -9,7 +9,7 @@
       <p class="title">Мои друзья</p>
       <FriendList />
     </div>
-    <NewFriendSearch/>
+    <NewFriendSearch />
   </div>
 </template>
 
@@ -29,6 +29,6 @@
   max-width: 677px;
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 40px;
 }
 </style>

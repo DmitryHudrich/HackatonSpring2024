@@ -1,19 +1,17 @@
 <template>
   <div>
-    <div v-if="routesList || routesList.length > 0">
+    <div v-if="RoutesList">
       <div class="list" v-for="route in routesList" :key="route.id"></div>
     </div>
     <div v-else>
-      <p>No Routes Found</p>
+      <p>У Вас нет маршрутов</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import RouterListItemVue from "./RouterListItem.vue";
-const routesList = ref([]);
+import RoutesListItemVue from './RoutesListItem.vue'
+// const routesList = ref([]);
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

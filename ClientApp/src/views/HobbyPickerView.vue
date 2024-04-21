@@ -29,8 +29,8 @@ const back = () => {
       </div>
       <router-link to="/map">
         <button class="hobby__button">Создать аккаунт</button>
-      </router-link>  
-    </div>   
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -83,5 +83,4 @@ button {
   justify-content: center;
   gap: 120px;
 }
-
 </style>

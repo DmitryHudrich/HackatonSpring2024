@@ -85,3 +85,6 @@
   --active-gradient: linear-gradient(to right, #073bb6, #73c7cf);
   --not-active-gradient: linear-gradient(to right, #181a1e, #373a40, #484c56);
 }
+html {
+  background-color: var(--background);
+}

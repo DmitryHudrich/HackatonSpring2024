@@ -39,10 +39,10 @@ const back = () => {
 
 <style scoped>
 .close {
-    position: absolute;
-    top: 50px;
-    left: 150px;
-    mix-blend-mode: difference;
+  position: absolute;
+  top: 50px;
+  left: 150px;
+  mix-blend-mode: difference;
 }
 
 p {

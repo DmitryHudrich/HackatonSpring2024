@@ -11,15 +11,13 @@
 </template>
 
 <script setup>
-
 const props = defineProps({
   friend: {
     type: Object,
-    default: '',
-  },
+    default: ''
+  }
 })
-const deleteFriend = () => { }
-
+const deleteFriend = () => {}
 </script>
 
 <style scoped>

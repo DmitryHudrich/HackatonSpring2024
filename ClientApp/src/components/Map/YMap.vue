@@ -97,13 +97,9 @@ onMounted(() => {
 }
 
 .map-container {
-  width: 100%;
-  height: 100%;
-  min-width: 320px;
-  min-height: 500px;
   border-radius: 20px;
   padding: 15px;
-  border: 2px solid hsl(var(--primary));
+  border: 2px solid hsl(var(--border));
 }
 .balloon {
   padding: 6px;

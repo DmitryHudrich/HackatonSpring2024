@@ -1,4 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import MapView from '../views/MapView.vue'
+import FriendsView from '../views/FriendsView.vue'
+import RoutesView from '../views/RoutesView.vue'
+import HobbyPickerView from '../views/HobbyPickerView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,12 +15,12 @@ const router = createRouter({
     {
       path: '/map',
       name: 'map',
-      component: () => import('../views/MapView.vue')
+      component: MapView
     },
     {
       path: '/friends',
       name: 'friends',
-      component: () => import('../views/FriendsView.vue')
+      component: FriendsView
     },
     {
       path: '/profile',
@@ -36,12 +40,12 @@ const router = createRouter({
     {
       path: '/hobby-picker',
       name: 'hobby-picker',
-      component: () => import('../views/HobbyPickerView.vue')
+      component: HobbyPickerView
     },
     {
       path: '/routes',
       name: 'routes',
-      component: () => import('../views/RoutesView.vue')
+      component: RoutesView
     },
     {
       path: '/:pathMatch(.*)*',

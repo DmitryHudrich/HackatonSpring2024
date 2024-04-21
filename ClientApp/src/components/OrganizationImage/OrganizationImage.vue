@@ -1,13 +1,19 @@
+<template>
+  <Card class="card">
+    <CardContent>
+      <img src="" alt="организация" class="image" />
+    </CardContent>
+  </Card>
+</template>
 <script setup>
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 </script>
 
-<template>
-    <Card>
-        <div class="" />
-    </Card>
-</template>
-
 <style scoped>
-
+.card {
+  display: flex;
+  height: 100%;
+  min-height: 264px;
+  min-width: 350px;
+}
 </style>

@@ -28,7 +28,7 @@ onMounted(async () => {
       <div class="content">
         <router-view></router-view>
       </div>
-      <Footer v-if="!(currentRoute === 'map')" />
+      <Footer  />
     </div>
   </div>
 </template>
