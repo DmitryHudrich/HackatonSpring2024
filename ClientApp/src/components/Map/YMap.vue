@@ -65,7 +65,7 @@ const initMap = async () => {
       map.controls.remove('geolocationControl')
       map.controls.remove('rulerControl')
       map.controls.remove('trafficControl')
-      map.controls.remove('typeSelecter')
+      map.controls.remove('typeSelector')
       map.controls.remove('searchControl')
       map.controls.remove('fullscreenControl')
     })

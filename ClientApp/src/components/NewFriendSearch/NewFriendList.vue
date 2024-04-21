@@ -1,6 +1,6 @@
 <template>
-  <div class="block" v-if="friends">
-    <div class="list" v-for="friend in friends" :key="friend.id">
+  <div class="block" v-if="users">
+    <div class="list" v-for="user in users" :key="user.id">
       <NewFriendListItem  />
     </div>
   </div>
@@ -8,7 +8,7 @@
 
 <script setup>
 import NewFriendListItem from './NewFriendListItem.vue';
-// const friends = ref([]);
+// const users = ref([]);
 </script>
 
 <style scoped>

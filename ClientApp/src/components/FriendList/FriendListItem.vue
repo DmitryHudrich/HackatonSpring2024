@@ -47,4 +47,7 @@ const deleteFriend = () => { }
   align-items: center;
   gap: 10px;
 }
+.delete {
+  mix-blend-mode: difference;
+}
 </style>

@@ -17,7 +17,7 @@
 <script setup>
 
 const props = defineProps({
-  users: {
+  user: {
     type: Object,
     default: '',
   },
