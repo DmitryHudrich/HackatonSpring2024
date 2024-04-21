@@ -21,6 +21,8 @@ public class UserRepository(ApplicationContext dbContext) {
 
     public async Task<User?> FindByFilterAsync<T>(UserFindFilter filter, T findRequest) {
         var res = filter switch {
+            UserFindFilter.Login => findRequest is string s ?
+                await FindByLoginAsync(s) : throw new ArgumentException("Wrong type", nameof(findRequest)),
             UserFindFilter.Id => findRequest is long g ?
                 await FindByIdAsync(g) : throw new ArgumentException("Wrong type", nameof(findRequest)),
             UserFindFilter.Refresh => findRequest is string s ?
@@ -29,6 +31,10 @@ public class UserRepository(ApplicationContext dbContext) {
             _ => default
         };
         return res;
+    }
+
+    private async Task<User?> FindByLoginAsync(string s) {
+        return dbContext.Users.FirstOrDefault(usr => usr.Login == s);
     }
 
     private Task<User?> FindByRefreshTokenAsync(string s) {
