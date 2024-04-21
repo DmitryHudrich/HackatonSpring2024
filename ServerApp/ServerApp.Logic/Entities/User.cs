@@ -13,7 +13,7 @@ public class User {
     public string? PhotoBase64 { get; set; }
 
     public required DateTime RegistrationDate { get; set; }
-    public required int Age { get; set; }
+    public int? Age { get; set; }
 
     public Role? Role { get; set; }
     public Point? SearchGeoposition { get; set; }

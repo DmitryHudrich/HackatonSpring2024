@@ -10,41 +10,12 @@ namespace ServerApp.Application.Services;
 public record class RegistrationResult(bool Success, List<PasswordCheckTroubles> Issues, string? Jwt = default);
 
 public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAuthService<RegistrationResult> {
-    public async Task<IInteractResult<RegistrationResult>> Register(string login, string password) {
-        (var isSuccess, var issues) = PasswordChecker.Check(password);
-        if (!isSuccess) {
-            return new InteractResult<RegistrationResult>(false, new RegistrationResult(false, issues));
-        }
-
-
-        System.Console.WriteLine("ДОБАВЛЕНИЕ БЕБРЫ");
-        // заглушка
-        await dbContext.Users.AddRangeAsync(new User {
-            UserInfo = new UserInfo {
-                Name = "sadasd",
-                Bio = "sadasd",
-            },
-            Login = login,
-            Password = password,
-            RegistrationDate = DateTime.Now,
-            Age = 0,
-            AuthInfo = new AuthInfo {
-                Web = true,
-                Telegram = true
-            }
-        });
-
-
-        _ = await dbContext.SaveChangesAsync();
-
-        var user = dbContext.Users.Where<User>(u => u.Login == login).FirstOrDefault();
-        System.Console.WriteLine(user.Id);
-        return new InteractResult<RegistrationResult>(true, new RegistrationResult(true, issues));
+    public Task<IInteractResult<RegistrationResult>> Register(string login, string password) {
+        throw new NotImplementedException();
     }
 
     public async Task<IInteractResult<RegistrationResult>> RegisterTelegram(HttpContext httpContext, ulong id, string? name = default, string? bio = default, string? photoBase64 = default) {
         var user = dbContext.Users.FirstOrDefault(u => u.TelegramId == id);
-        var jwt = jwtService.GenerateJwtToken(user, httpContext, ApplicationOptions.SecureCookieOptions);
 
         if (user == null) {
             user = new User {
@@ -63,8 +34,13 @@ public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAu
             _ = await dbContext.Users.AddAsync(user);
         }
 
+        var jwt = jwtService.GenerateJwtToken(user, httpContext, ApplicationOptions.SecureCookieOptions);
         _ = await dbContext.SaveChangesAsync();
         return new InteractResult<RegistrationResult>(true, new RegistrationResult(true, [], jwt));
+    }
+
+    public Task<IInteractResult<RegistrationResult>> RegisterTelegram(ulong id) {
+        throw new NotImplementedException();
     }
 }
 //

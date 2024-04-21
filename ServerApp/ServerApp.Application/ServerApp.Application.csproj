@@ -19,7 +19,8 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="8.0.2" />
   </ItemGroup>
 
-  <PropertyGroup>  
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

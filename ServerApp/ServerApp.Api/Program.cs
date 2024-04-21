@@ -5,9 +5,10 @@ using Npgsql;
 using ServerApp.Api;
 using ServerApp.Application;
 using ServerApp.Application.Services;
+using ServerApp.Application.Tools;
 using ServerApp.DataBase;
+using ServerApp.DataBase.Repository;
 using ServerApp.Logic.Stores;
-
 
 System.Console.WriteLine(System.Environment.GetEnvironmentVariable("PROD_CONTAINER"));
 var builder = WebApplication.CreateBuilder(args);
@@ -46,8 +47,10 @@ builder.Services.AddNpgsql<ApplicationContext>(
         builder.UseNetTopologySuite());
 
 
-_ = builder.Services.AddScoped<IAuthService<RegistrationResult>, UserAuth>();
 
+_ = builder.Services.AddScoped<UserRepository>();
+_ = builder.Services.AddScoped<JwtService>();
+_ = builder.Services.AddScoped<IAuthService<RegistrationResult>, UserAuth>();
 
 builder.Services.AddCors();
 builder.Services.AddLogging();

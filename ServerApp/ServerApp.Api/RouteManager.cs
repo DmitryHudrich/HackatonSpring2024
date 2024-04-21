@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ServerApp.Api.DataTransferObjects.Request;
+﻿using ServerApp.Api.DataTransferObjects.Request;
 using ServerApp.Api.DataTransferObjects.Response;
 using ServerApp.Api.Stuff;
 using ServerApp.Application.Services;
