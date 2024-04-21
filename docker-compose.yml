@@ -32,7 +32,7 @@ services:
     build: TelegramApp/
     environment:
       - API_URL=http://serverapp:8080/
-      - TELEGRAM_API=6422029665:AAFV_b1BagIkrfVTTbRs2c0LtVmXGFFzXfY
+      - TELEGRAM_API=${TELEGRAM_API}
       - ISCONTAINER=TRUE
     ports:
       - "3399:3399"
