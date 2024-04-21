@@ -7,9 +7,7 @@ using ServerApp.Logic.Stores;
 
 namespace ServerApp.Application.Services;
 
-public record class RegistrationResult(bool Success, List<PasswordCheckTroubles> Issues, string? Jwt = default);
-
-public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAuthService<RegistrationResult> {
+public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAuthService {
     public Task<IInteractResult<RegistrationResult>> Register(string login, string password) {
         throw new NotImplementedException();
     }
@@ -35,7 +33,7 @@ public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAu
             _ = await dbContext.Users.AddAsync(user);
         }
 
-        var jwt = jwtService.GenerateJwtToken(user, httpContext, ApplicationOptions.SecureCookieOptions);
+        var jwt = await jwtService.GenerateJwtTokenAsync(user, httpContext, ApplicationOptions.SecureCookieOptions);
         _ = await dbContext.SaveChangesAsync();
         return new InteractResult<RegistrationResult>(true, new RegistrationResult(true, [], jwt));
     }

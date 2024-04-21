@@ -1,11 +1,6 @@
-﻿namespace ServerApp.Application.Tools;
+﻿using ServerApp.Logic.Stores;
 
-public enum PasswordCheckTroubles {
-    TooShort,
-    NoDigit,
-    NoUppercase,
-    NoLowercase,
-}
+namespace ServerApp.Application.Tools;
 
 public static class PasswordChecker {
     public static (bool, List<PasswordCheckTroubles>) Check(string password) {

@@ -21,7 +21,7 @@ public sealed class JwtService(ILogger<JwtService> logger, UserRepository reposi
         };
     }
 
-    public string GenerateJwtToken(User user, HttpContext httpContext, CookieOptions cookieOptions) {
+    public async Task<string> GenerateJwtTokenAsync(User user, HttpContext httpContext, CookieOptions cookieOptions) {
         logger.LogInformation("GenerateJwtToken: {User}", user);
 
         var claims = new List<Claim>();
@@ -52,7 +52,7 @@ public sealed class JwtService(ILogger<JwtService> logger, UserRepository reposi
 
         user.RefreshTokenData = refresh.Token;
         user.RefreshTokenExpiration = refresh.Expiration;
-        _ = repository.UpdateRefresh(user);
+        _ = await repository.UpdateRefresh(user);
 
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }

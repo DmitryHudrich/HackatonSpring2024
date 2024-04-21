@@ -43,15 +43,13 @@ builder.Services.AddSwaggerGen(options => {
 // закостыляли малеха не смогли разобраться 
 builder.Services.AddNpgsql<ApplicationContext>(
         //"Host=172.21.0.3;Port=5432;Database=usersdb;Username=postgres;Password=12345",
-        "Host=172.21.0.2;Port=5432;Database=usersdb;Username=postgres;Password=12345",
+        "Host=hackatonspring2024-postgres-1;Port=5432;Database=usersdb;Username=postgres;Password=12345",
         builder =>
         builder.UseNetTopologySuite());
 
-
-
 _ = builder.Services.AddScoped<UserRepository>();
 _ = builder.Services.AddScoped<JwtService>();
-_ = builder.Services.AddScoped<IAuthService<RegistrationResult>, UserAuth>();
+_ = builder.Services.AddScoped<IAuthService, UserAuth>();
 
 builder.Services.AddCors();
 builder.Services.AddLogging();

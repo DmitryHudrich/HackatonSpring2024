@@ -16,7 +16,7 @@ internal static class RouteManager {
     }
 
     public static void Auth() {
-        _ = app.MapPost("/auth/registration", (RegistrationRequest dto, IAuthService<RegistrationResult> authService) => {
+        _ = app.MapPost("/auth/registration", (RegistrationRequest dto, IAuthService authService) => {
             _ = authService.Register(dto.Login, dto.Password);
         }).WithOpenApi(operation => new(operation) {
             Summary = "Register user with login and password",
@@ -30,14 +30,16 @@ internal static class RouteManager {
             Description = $"200 - succes login and return\n403 - wrong password\n 400 - otherwise. With 200 sends jwt token in body and refresh token in cookie '{Constants.REFRESH_COOKIE}'"
         }).Produces<SuccessLoginResponse>();
 
-        _ = app.MapGet("/auth/refresh", () => Results.NotFound())
+        _ = app.MapGet("/auth/refresh", (HttpContext context) => {
+
+        })
             .WithOpenApi(operation => new(operation) {
                 Summary = "Refreshes jwt",
                 Description = "200 - success; 403 - otherwise. With 200 sends jwt token in body and refresh token in cookie '{Constants.REFRESH_COOKIE}'"
             })
             .Produces<SuccessLoginResponse>();
 
-        _ = app.MapPost("/auth/registration/telegram", async (HttpContext context, TelegramRegistrationRequest dto, IAuthService<RegistrationResult> authService) => {
+        _ = app.MapPost("/auth/registration/telegram", async (HttpContext context, TelegramRegistrationRequest dto, IAuthService authService) => {
             var res = await authService.RegisterTelegram(context, dto.TelegramId, dto.FirstName, dto.LastName, dto.Bio, dto.PhotoBase64);
             return res;
         })
