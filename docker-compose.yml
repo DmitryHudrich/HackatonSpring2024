@@ -31,7 +31,7 @@ services:
   telegrambot:
     build: TelegramApp/
     environment:
-      - API_URL=http://serverapp:1488/
+      - API_URL=http://serverapp:8080/
       - TELEGRAM_API=6422029665:AAFV_b1BagIkrfVTTbRs2c0LtVmXGFFzXfY
       - ISCONTAINER=TRUE
     ports:
