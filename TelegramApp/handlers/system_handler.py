@@ -6,7 +6,7 @@ from aiogram.fsm.context import FSMContext
 from text.text_for_commands import get_text_for_start, get_text_for_help, get_text_for_my_profile
 from keyboard.inline_btn import generate_button_for_profile
 from state.review_state import ReviewState
-
+from random import choice as choice_gif
 import logging
 
 system_router: Router = Router()
@@ -35,8 +35,15 @@ async def help_command(msg: types.Message) -> None:
 
     logging.info(msg="Обработка команды - help")
     for_message_help: str = "\n".join(await get_text_for_help(msg.from_user.first_name))
+    
+    all_gif_for_help: tuple = (
+        "TelegramApp/static/sakura.gif", "TelegramApp/static/city.gif",
+        "TelegramApp/static/rain.gif", "TelegramApp/static/snow.gif",
+        "TelegramApp/static/minimoss.gif", "TelegramApp/static/train.gif"
+    )
+
     await msg.answer_animation(
-        animation=FSInputFile("TelegramApp/static/sakura.gif"),
+        animation=FSInputFile(choice_gif(all_gif_for_help)),
         caption=for_message_help,
         parse_mode="HTML"
     )
