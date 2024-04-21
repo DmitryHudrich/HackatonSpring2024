@@ -15,5 +15,7 @@ public static class ActivityTypeRouteManager {
                 await hobbyService.GetByFilterAsync(Logic.Stores.Filters.HobbyFindFilter.Name, name));
         _ = app.MapGet("/activity/byid/{id}", async (long id, IHobbyService hobbyService) =>
                 await hobbyService.GetByFilterAsync(Logic.Stores.Filters.HobbyFindFilter.Id, id));
+
+        _ = app.
     }
 }
