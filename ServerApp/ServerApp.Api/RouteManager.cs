@@ -26,8 +26,11 @@ internal static class RouteManager {
             Description = "201 - if user created \n403 - otherwise"
         });
 
-        _ = app.MapPost("/auth/login", (LoginRequest dto) => {
-
+        _ = app.MapPost("/auth/login", async (HttpContext context, LoginRequest dto, IAuthService authService) => {
+            var res = await authService.Login(context, dto.Login, dto.Password);
+            return res.Success
+                ? Results.Ok(res.Value) :
+                Results.StatusCode(403);
         }).WithOpenApi(operation => new(operation) {
             Summary = "Login user with login and password",
             Description = $"200 - succes login and return\n403 - wrong password\n 400 - otherwise. With 200 sends jwt token in body and refresh token in cookie '{Constants.REFRESH_COOKIE}'"

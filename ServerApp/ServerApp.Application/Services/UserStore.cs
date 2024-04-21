@@ -11,6 +11,18 @@ using ServerApp.Logic.Stores.Filters;
 namespace ServerApp.Application.Services;
 
 public class UserAuth(UserRepository repository, JwtService jwtService) : IAuthService {
+    public async Task<IInteractResult<string>> Login(HttpContext httpContext, string login, string password) {
+        var user = await repository.FindByFilterAsync(UserFindFilter.Login, login);
+        if (user == null) {
+            return new InteractResult<string>(Success: false, ErrorMessage: "User not found", Value: null);
+        }
+        if (!BCrypt.Net.BCrypt.Verify(password, user.Password)) {
+            return new InteractResult<string>(Success: false, ErrorMessage: "Wrong password", Value: null);
+        }
+        var jwt = await jwtService.GenerateJwtTokenAsync(user, httpContext, ApplicationOptions.SecureCookieOptions);
+        return new InteractResult<string>(Success: true, ErrorMessage: "Success", Value: jwt);
+    }
+
     public async Task<IInteractResult<string>> Refresh(HttpContext httpContext) {
         var user = await repository.FindByFilterAsync(UserFindFilter.Refresh, httpContext.Request.Cookies["X-Refresh"] ?? string.Empty);
         if (user == null) {
