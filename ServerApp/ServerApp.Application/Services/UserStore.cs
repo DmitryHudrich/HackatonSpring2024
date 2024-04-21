@@ -14,13 +14,14 @@ public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAu
         throw new NotImplementedException();
     }
 
-    public async Task<IInteractResult<RegistrationResult>> RegisterTelegram(HttpContext httpContext, ulong id, string? name = default, string? bio = default, string? photoBase64 = default) {
+    public async Task<IInteractResult<RegistrationResult>> RegisterTelegram(HttpContext httpContext, ulong id, string? firstName = default, string? lastName = default, string? bio = default, string? photoBase64 = default) {
         var user = dbContext.Users.FirstOrDefault(u => u.TelegramId == id);
 
         if (user == null) {
             user = new User {
                 UserInfo = new UserInfo {
-                    Name = name,
+                    FirstName = firstName,
+                    LastName = lastName,
                     Bio = bio,
                 },
                 TelegramId = id,
@@ -37,10 +38,6 @@ public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAu
         var jwt = jwtService.GenerateJwtToken(user, httpContext, ApplicationOptions.SecureCookieOptions);
         _ = await dbContext.SaveChangesAsync();
         return new InteractResult<RegistrationResult>(true, new RegistrationResult(true, [], jwt));
-    }
-
-    public Task<IInteractResult<RegistrationResult>> RegisterTelegram(ulong id) {
-        throw new NotImplementedException();
     }
 }
 //

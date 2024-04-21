@@ -23,7 +23,9 @@ public class User {
     public List<FriendsPair> FriendRecievers { get; set; } = [];
     public List<FriendsPair> FriendSenders { get; set; } = [];
 
-    public RefreshToken? RefreshToken { get; set; }
+    public string? RefreshTokenData { get; set; }
+    public TimeSpan RefreshTokenExpiration { get; set; }
+
     public List<Hobby> Hobbies { get; set; } = [];
 }
 
@@ -33,6 +35,7 @@ public class AuthInfo {
 }
 
 public class UserInfo {
-    public string? Name { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
     public string? Bio { get; set; }
 }

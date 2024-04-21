@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServerApp.Logic.Entities;
 
 namespace ServerApp.DataBase;
@@ -35,7 +36,6 @@ public class ApplicationContext : DbContext {
                 _ = builder.Property(b => b.RegistrationDate).HasColumnType("timestamp(6)");
 
                 _ = builder.ComplexProperty(user => user.UserInfo);
-                _ = builder.ComplexProperty(user => user.RefreshToken);
             });
 
         _ = modelBuilder.Entity<Reviews>(

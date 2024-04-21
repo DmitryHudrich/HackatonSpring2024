@@ -37,8 +37,9 @@ internal static class RouteManager {
             })
             .Produces<SuccessLoginResponse>();
 
-        _ = app.MapPost("/auth/registration/telegram", (TelegramRegistrationRequest dto) => {
-
+        _ = app.MapPost("/auth/registration/telegram", async (HttpContext context, TelegramRegistrationRequest dto, IAuthService<RegistrationResult> authService) => {
+            var res = await authService.RegisterTelegram(context, dto.TelegramId, dto.FirstName, dto.LastName, dto.Bio, dto.PhotoBase64);
+            return res;
         })
             .WithOpenApi(operation => new(operation) {
                 Summary = "Register user with telegram id",

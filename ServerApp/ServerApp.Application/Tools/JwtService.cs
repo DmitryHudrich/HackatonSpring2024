@@ -34,7 +34,7 @@ public sealed class JwtService(ILogger<JwtService> logger, UserRepository reposi
                 claims: claims,
                 expires: DateTime.UtcNow.AddMinutes(ApplicationOptions.JwtOptions.JwtExpirationTime),
                 signingCredentials: new SigningCredentials(
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes("key")),
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes("OCHEN_BOLSHOY_LKUCHIK_12312312313123")),
                     SecurityAlgorithms.HmacSha256
             )
         );
@@ -50,7 +50,8 @@ public sealed class JwtService(ILogger<JwtService> logger, UserRepository reposi
         cookie.Append("X-Access", new JwtSecurityTokenHandler().WriteToken(jwt), cookieOptions);
         cookie.Append("X-Refresh", refresh.Token, cookieOptions);
 
-        user.RefreshToken = refresh;
+        user.RefreshTokenData = refresh.Token;
+        user.RefreshTokenExpiration = refresh.Expiration;
         _ = repository.UpdateRefresh(user);
 
         return new JwtSecurityTokenHandler().WriteToken(jwt);
