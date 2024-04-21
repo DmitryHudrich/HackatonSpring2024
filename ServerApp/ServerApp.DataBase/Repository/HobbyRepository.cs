@@ -9,7 +9,7 @@ public class HobbyRepository(ApplicationContext dbContext) {
         return res;
     }
 
-    public async Task<bool> Remove(long activityTypeId) {
+    public async Task<bool> RemoveAsync(long activityTypeId) {
         var res = dbContext.Hobbies.FirstOrDefault(usr => usr.Id == activityTypeId);
         if (res == null) {
             return false;
@@ -34,7 +34,7 @@ public class HobbyRepository(ApplicationContext dbContext) {
         return true;
     }
 
-    public async Task<List<ActivityType?>> FindByFilterAsync<T>(HobbyFindFilter filter, T findRequest) {
+    public async Task<List<Hobby?>> FindByFilterAsync<T>(HobbyFindFilter filter, T findRequest) {
         var res = filter switch {
             HobbyFindFilter.Name => findRequest is string s ?
                 await FindByNameAsync(s) : throw new ArgumentException("Wrong type", nameof(findRequest)),
@@ -56,11 +56,15 @@ public class HobbyRepository(ApplicationContext dbContext) {
         _ = await dbContext.SaveChangesAsync();
     }
 
-    private async Task<List<ActivityType?>> FindByIdAsync(long g) {
-        return (List<ActivityType?>)dbContext.ActivityTypes.Select(usr => usr.Id == g);
+    private async Task<List<Hobby>> FindByIdAsync(long g) {
+        return dbContext.Hobbies
+            .Where(usr => usr.Id == g)
+            .ToList();
     }
 
-    private async Task<List<ActivityType?>> FindByNameAsync(string s) {
-        return (List<ActivityType?>)dbContext.ActivityTypes.Select(usr => usr.Name == s);
+    private async Task<List<Hobby>> FindByNameAsync(string s) {
+        return dbContext.Hobbies
+            .Where(usr => usr.Name == s)
+            .ToList();
     }
 }

@@ -33,11 +33,8 @@ public sealed class JwtService(ILogger<JwtService> logger, UserRepository reposi
                 audience: ApplicationOptions.JwtOptions.Audience,
                 claims: claims,
                 expires: DateTime.UtcNow.AddMinutes(ApplicationOptions.JwtOptions.JwtExpirationTime),
-                signingCredentials: new SigningCredentials(
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes("OCHEN_BOLSHOY_LKUCHIK_12312312313123")),
-                    SecurityAlgorithms.HmacSha256
-            )
-        );
+                signingCredentials: new SigningCredentials(ApplicationOptions.JwtOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256
+        ));
 
         var cookie = httpContext.Response.Cookies;
 

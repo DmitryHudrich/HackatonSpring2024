@@ -82,7 +82,7 @@ public class UserAuth(UserRepository repository, JwtService jwtService) : IAuthS
         }
 
         var jwt = await jwtService.GenerateJwtTokenAsync(user, httpContext, ApplicationOptions.SecureCookieOptions);
-        return new InteractResult<string>(true, string.Empty, jwt);
+        return new InteractResult<string>(true, jwt, string.Empty);
     }
 }
 //

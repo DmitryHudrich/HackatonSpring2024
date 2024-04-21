@@ -1,5 +1,7 @@
-﻿using ServerApp.Api.DataTransferObjects.Request;
+﻿using Microsoft.AspNetCore.Authorization;
+using ServerApp.Api.DataTransferObjects.Request;
 using ServerApp.Api.DataTransferObjects.Response;
+using ServerApp.Api.RouteManagers;
 using ServerApp.Api.Stuff;
 using ServerApp.Logic.Stores;
 
@@ -11,12 +13,15 @@ internal static class RouteManager {
     public static void SetEndpoints(WebApplication app) {
         RouteManager.app = app;
 
+        ActivityTypeRouteManager.SetEndpoints(app);
         Auth();
         User();
 
     }
 
     public static void Auth() {
+        _ = app.MapGet("/admin", [Authorize(Roles = "admin")] () => "овсянкин");
+
         _ = app.MapPost("/auth/registration", async (RegistrationRequest dto, IAuthService authService) => {
             var res = await authService.Register(dto.Login, dto.Password, dto.FirstName, dto.LastName, dto.Bio, dto.PhotoBase64);
             return res.Success

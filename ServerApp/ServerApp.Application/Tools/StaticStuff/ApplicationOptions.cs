@@ -1,6 +1,9 @@
-﻿namespace ServerApp.Application.Tools.StaticStuff;
+﻿using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
-internal class ApplicationOptions {
+namespace ServerApp.Application.Tools.StaticStuff;
+
+public class ApplicationOptions {
     public static readonly CookieOptions SecureCookieOptions = new CookieOptions {
         HttpOnly = true,
         Secure = true
@@ -15,8 +18,11 @@ internal class ApplicationOptions {
     public static readonly TimeSpan RefreshTokenExpiration = TimeSpan.FromDays(180);
 }
 
-internal class JwtOptions {
+public class JwtOptions {
     public required string Audience;
     public required string Issuer;
     public required double JwtExpirationTime;
+    const string DONT_STEAL_THIS_PLEASE_BRO = "adnag;;oi3u0-u[fjs;aofj;ehnfpqhweohfksldj";
+    public SymmetricSecurityKey GetSymmetricSecurityKey() =>
+        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(DONT_STEAL_THIS_PLEASE_BRO));
 }
