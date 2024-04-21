@@ -1,16 +1,23 @@
-﻿using ServerApp.Application.Tools;
+﻿using System.Security.Claims;
+using ServerApp.Application.Tools;
 using ServerApp.Application.Tools.StaticStuff;
 using ServerApp.DataBase;
+using ServerApp.DataBase.Repository;
 using ServerApp.Logic;
 using ServerApp.Logic.Entities;
 using ServerApp.Logic.Stores;
+using ServerApp.Logic.Stores.Filters;
 
 namespace ServerApp.Application.Services;
 
-public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAuthService {
-    public Task<IInteractResult> Refresh(HttpContext httpContext) {
-        // var user = dbContext.Users.FirstOrDefault(u => u.Login == httpContext.User.)
-        throw new NotImplementedException();
+public class UserAuth(UserRepository repository, JwtService jwtService) : IAuthService {
+    public async Task<IInteractResult<string>> Refresh(HttpContext httpContext) {
+        var user = await repository.FindByFilterAsync(UserFindFilter.Refresh, httpContext.Request.Cookies["X-Refresh"] ?? string.Empty);
+        if (user == null) {
+            return new InteractResult<string>(Success: false, ErrorMessage: "User not found", Value: null);
+        }
+        var jwt = await jwtService.GenerateJwtTokenAsync(user, httpContext, ApplicationOptions.SecureCookieOptions);
+        return new InteractResult<string>(Success: true, ErrorMessage: "Success", Value: jwt);
     }
 
     public Task<IInteractResult<RegistrationResult>> Register(string login, string password) {
@@ -18,7 +25,7 @@ public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAu
     }
 
     public async Task<IInteractResult<RegistrationResult>> RegisterTelegram(HttpContext httpContext, ulong id, string? firstName = default, string? lastName = default, string? bio = default, string? photoBase64 = default) {
-        var user = dbContext.Users.FirstOrDefault(u => u.TelegramId == id);
+        var user = await repository.FindByFilterAsync(UserFindFilter.Id, (long)id);
 
         if (user == null) {
             user = new User {
@@ -35,11 +42,10 @@ public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAu
                 PhotoBase64 = photoBase64
             };
 
-            _ = await dbContext.Users.AddAsync(user);
+            await repository.AddAsync(user);
         }
 
         var jwt = await jwtService.GenerateJwtTokenAsync(user, httpContext, ApplicationOptions.SecureCookieOptions);
-        _ = await dbContext.SaveChangesAsync();
         return new InteractResult<RegistrationResult>(true, new RegistrationResult(true, [], jwt));
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ServerApp.Logic.Entities;
+using ServerApp.Logic.Stores.Filters;
 
 namespace ServerApp.DataBase.Repository;
 
@@ -11,5 +12,30 @@ public class UserRepository(ApplicationContext dbContext) {
         res.RefreshTokenExpiration = user.RefreshTokenExpiration;
         res.RefreshTokenData = user.RefreshTokenData;
         return await dbContext.SaveChangesAsync() > 0;
+    }
+
+    public async Task AddAsync(User user) {
+        _ = await dbContext.Users.AddAsync(user);
+        _ = await dbContext.SaveChangesAsync();
+    }
+
+    public async Task<User?> FindByFilterAsync<T>(UserFindFilter filter, T findRequest) {
+        var res = filter switch {
+            UserFindFilter.Id => findRequest is long g ?
+                await FindByIdAsync(g) : throw new ArgumentException("Wrong type", nameof(findRequest)),
+            UserFindFilter.Refresh => findRequest is string s ?
+                await FindByRefreshTokenAsync(s) : throw new ArgumentException("Wrong type", nameof(findRequest)),
+            UserFindFilter.Suitability => throw new NotImplementedException(),
+            _ => default
+        };
+        return res;
+    }
+
+    private Task<User?> FindByRefreshTokenAsync(string s) {
+        return Task.FromResult(dbContext.Users.FirstOrDefault(usr => usr.RefreshTokenData == s));
+    }
+
+    private Task<User?> FindByIdAsync(long g) {
+        return Task.FromResult(dbContext.Users.FirstOrDefault(usr => usr.Id == g));
     }
 }

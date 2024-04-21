@@ -3,5 +3,7 @@
 public enum UserFindFilter {
     Id,
     Suitability,
+    Refresh,
 }
+
 

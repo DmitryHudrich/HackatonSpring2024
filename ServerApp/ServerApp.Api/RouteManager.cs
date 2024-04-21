@@ -30,9 +30,12 @@ internal static class RouteManager {
             Description = $"200 - succes login and return\n403 - wrong password\n 400 - otherwise. With 200 sends jwt token in body and refresh token in cookie '{Constants.REFRESH_COOKIE}'"
         }).Produces<SuccessLoginResponse>();
 
-        _ = app.MapGet("/auth/refresh", (HttpContext context) => {
-            var refreshToken = context.Request.Cookies["X-Refresh"];
-
+        _ = app.MapGet("/auth/refresh", async (HttpContext context, IAuthService authService) => {
+            var res = await authService.Refresh(context);
+            if (res.Success) {
+                return Results.Ok(res.Value);
+            }
+            return Results.StatusCode(403);
         })
             .WithOpenApi(operation => new(operation) {
                 Summary = "Refreshes jwt",
