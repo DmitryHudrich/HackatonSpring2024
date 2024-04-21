@@ -4,11 +4,12 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using ServerApp.Application.Tools.StaticStuff;
+using ServerApp.DataBase.Repository;
 using ServerApp.Logic.Entities;
 
 namespace ServerApp.Application.Tools;
 
-public sealed class JwtService(ILogger<JwtService> logger) {
+public sealed class JwtService(ILogger<JwtService> logger, UserRepository repository) {
     public RefreshToken GenerateRefreshToken(TimeSpan expire) {
         logger.LogInformation("GenerateRefreshToken: {Expire}", expire);
         var randomNumber = new byte[32];
@@ -49,7 +50,8 @@ public sealed class JwtService(ILogger<JwtService> logger) {
         cookie.Append("X-Access", new JwtSecurityTokenHandler().WriteToken(jwt), cookieOptions);
         cookie.Append("X-Refresh", refresh.Token, cookieOptions);
 
-        // TODO: add refresh to db
+        user.RefreshToken = refresh;
+        _ = repository.UpdateRefresh(user);
 
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }

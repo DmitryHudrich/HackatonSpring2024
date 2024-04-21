@@ -1,4 +1,5 @@
 ﻿using ServerApp.Application.Tools;
+using ServerApp.Application.Tools.StaticStuff;
 using ServerApp.DataBase;
 using ServerApp.Logic;
 using ServerApp.Logic.Entities;
@@ -6,9 +7,9 @@ using ServerApp.Logic.Stores;
 
 namespace ServerApp.Application.Services;
 
-public record class RegistrationResult(bool Success, List<PasswordCheckTroubles> Issues);
+public record class RegistrationResult(bool Success, List<PasswordCheckTroubles> Issues, string? Jwt = default);
 
-public class UserAuth(ApplicationContext dbContext) : IAuthService<RegistrationResult> {
+public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAuthService<RegistrationResult> {
     public async Task<IInteractResult<RegistrationResult>> Register(string login, string password) {
         (var isSuccess, var issues) = PasswordChecker.Check(password);
         if (!isSuccess) {
@@ -41,11 +42,29 @@ public class UserAuth(ApplicationContext dbContext) : IAuthService<RegistrationR
         return new InteractResult<RegistrationResult>(true, new RegistrationResult(true, issues));
     }
 
-    public async Task<IInteractResult<RegistrationResult>> RegisterTelegram(ulong id) {
+    public async Task<IInteractResult<RegistrationResult>> RegisterTelegram(HttpContext httpContext, ulong id, string? name = default, string? bio = default, string? photoBase64 = default) {
         var user = dbContext.Users.FirstOrDefault(u => u.TelegramId == id);
-        if (user == null) {
+        var jwt = jwtService.GenerateJwtToken(user, httpContext, ApplicationOptions.SecureCookieOptions);
 
+        if (user == null) {
+            user = new User {
+                UserInfo = new UserInfo {
+                    Name = name,
+                    Bio = bio,
+                },
+                TelegramId = id,
+                RegistrationDate = DateTime.Now,
+                AuthInfo = new AuthInfo {
+                    Telegram = true,
+                },
+                PhotoBase64 = photoBase64
+            };
+
+            _ = await dbContext.Users.AddAsync(user);
         }
+
+        _ = await dbContext.SaveChangesAsync();
+        return new InteractResult<RegistrationResult>(true, new RegistrationResult(true, [], jwt));
     }
 }
 //

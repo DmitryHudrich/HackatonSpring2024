@@ -23,6 +23,7 @@ public class User {
     public List<FriendsPair> FriendRecievers { get; set; } = [];
     public List<FriendsPair> FriendSenders { get; set; } = [];
 
+    public RefreshToken? RefreshToken { get; set; }
     public List<Hobby> Hobbies { get; set; } = [];
 }
 

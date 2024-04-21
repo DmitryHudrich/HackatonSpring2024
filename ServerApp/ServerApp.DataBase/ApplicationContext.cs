@@ -32,16 +32,10 @@ public class ApplicationContext : DbContext {
         _ = modelBuilder.Entity<User>(
             builder => {
                 _ = builder.ComplexProperty(user => user.AuthInfo);
-            });
-
-        _ = modelBuilder.Entity<User>(
-                builder => {
-                    _ = builder.ComplexProperty(user => user.UserInfo);
-                });
-
-        _ = modelBuilder.Entity<User>(
-            builder => {
                 _ = builder.Property(b => b.RegistrationDate).HasColumnType("timestamp(6)");
+
+                _ = builder.ComplexProperty(user => user.UserInfo);
+                _ = builder.ComplexProperty(user => user.RefreshToken);
             });
 
         _ = modelBuilder.Entity<Reviews>(

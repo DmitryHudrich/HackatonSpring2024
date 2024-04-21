@@ -3,7 +3,8 @@
 namespace ServerApp.DataBase.Repository;
 
 public class UserRepository(ApplicationContext dbContext) {
-    public async Task<bool> AddAsync(User user) {
-        throw new NotImplementedException();
+    public async Task<bool> UpdateRefresh(User user) {
+        _ = dbContext.Users.Update(user);
+        return await dbContext.SaveChangesAsync() > 0;
     }
 }
