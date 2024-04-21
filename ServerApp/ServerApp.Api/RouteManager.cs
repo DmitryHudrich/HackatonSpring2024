@@ -16,8 +16,11 @@ internal static class RouteManager {
     }
 
     public static void Auth() {
-        _ = app.MapPost("/auth/registration", (RegistrationRequest dto, IAuthService authService) => {
-            _ = authService.Register(dto.Login, dto.Password);
+        _ = app.MapPost("/auth/registration", async (RegistrationRequest dto, IAuthService authService) => {
+            var res = await authService.Register(dto.Login, dto.Password, dto.FirstName, dto.LastName, dto.Bio, dto.PhotoBase64);
+            return res.Success
+                ? Results.StatusCode(201)
+                : Results.StatusCode(403);
         }).WithOpenApi(operation => new(operation) {
             Summary = "Register user with login and password",
             Description = "201 - if user created \n403 - otherwise"
@@ -32,10 +35,9 @@ internal static class RouteManager {
 
         _ = app.MapGet("/auth/refresh", async (HttpContext context, IAuthService authService) => {
             var res = await authService.Refresh(context);
-            if (res.Success) {
-                return Results.Ok(res.Value);
-            }
-            return Results.StatusCode(403);
+            return res.Success
+                ? Results.Ok(res.Value)
+                : Results.StatusCode(403);
         })
             .WithOpenApi(operation => new(operation) {
                 Summary = "Refreshes jwt",

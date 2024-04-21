@@ -20,11 +20,35 @@ public class UserAuth(UserRepository repository, JwtService jwtService) : IAuthS
         return new InteractResult<string>(Success: true, ErrorMessage: "Success", Value: jwt);
     }
 
-    public Task<IInteractResult<RegistrationResult>> Register(string login, string password) {
-        throw new NotImplementedException();
+    public async Task<IInteractResult<string>> Register(string login, string password, string? firstName = default, string? lastName = default, string? bio = default, string? photoBase64 = default) {
+        var user = await repository.FindByFilterAsync(UserFindFilter.Login, login);
+        if (user != null) {
+            return new InteractResult<string>(Success: false, ErrorMessage: "User with this login already exists", Value: "");
+        }
+
+        if (user == null) {
+            user = new User {
+                Login = login,
+                Password = BCrypt.Net.BCrypt.HashPassword(password),
+                UserInfo = new UserInfo {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Bio = bio,
+                },
+                RegistrationDate = DateTime.Now,
+                AuthInfo = new AuthInfo {
+                    Web = true,
+                },
+                PhotoBase64 = photoBase64
+            };
+
+            await repository.AddAsync(user);
+        }
+
+        return new InteractResult<string>(true, string.Empty, string.Empty);
     }
 
-    public async Task<IInteractResult<RegistrationResult>> RegisterTelegram(HttpContext httpContext, ulong id, string? firstName = default, string? lastName = default, string? bio = default, string? photoBase64 = default) {
+    public async Task<IInteractResult<string>> RegisterTelegram(HttpContext httpContext, ulong id, string? firstName = default, string? lastName = default, string? bio = default, string? photoBase64 = default) {
         var user = await repository.FindByFilterAsync(UserFindFilter.Id, (long)id);
 
         if (user == null) {
@@ -46,7 +70,7 @@ public class UserAuth(UserRepository repository, JwtService jwtService) : IAuthS
         }
 
         var jwt = await jwtService.GenerateJwtTokenAsync(user, httpContext, ApplicationOptions.SecureCookieOptions);
-        return new InteractResult<RegistrationResult>(true, new RegistrationResult(true, [], jwt));
+        return new InteractResult<string>(true, string.Empty, jwt);
     }
 }
 //
