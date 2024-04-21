@@ -52,7 +52,7 @@ async def start_application():
     await bot.delete_webhook(drop_pending_updates=True)
 
     #Include middleware
-    #dp.message.middleware.register(AuthenticationUser())
+    dp.message.middleware.register(AuthenticationUser())
     dp.message.middleware.register(Throtling())
 
     try:

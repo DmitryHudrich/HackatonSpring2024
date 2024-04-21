@@ -11,4 +11,4 @@ async def all_react_to_message(message: types.Message) -> None:
         React other message
     """
     logging.info(msg="Пользователь отправил текстовое сообщение")
-    await message.answer(text="Не могу обработать ваш запрос, ожидает команда!")
+    await message.answer(text="Не могу обработать ваш запрос, ожидается команда!")

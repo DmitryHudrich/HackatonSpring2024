@@ -11,6 +11,7 @@ class RegistrationUser(BaseModel):
     firstname: Annotated[str, Field()]
     lastname: Annotated[str, Field()]
     bio: Annotated[str, Field()]
+    photoBase64: Annotated[str, Field()]
 
 
 class GetInfoByToken(BaseModel):

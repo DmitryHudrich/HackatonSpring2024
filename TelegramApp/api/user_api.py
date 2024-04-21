@@ -4,6 +4,7 @@ import requests
 from settings import settings
 from typing import Dict
 from models.UserModels import RegistrationUser
+from config import configuration_app_for_auth
 
 
 class UserService:
@@ -24,6 +25,8 @@ class UserService:
             )
 
             if request.status_code in (200, 201):
+                configuration_app_for_auth.refresh_token = request.cookies.get_dict()["X-Refresh"]
+                configuration_app_for_auth.token = request.text
                 return True
             raise requests.ConnectionError("Не удалось зарегистрировать/авторизировать пользователя")
         except Exception as ex:
