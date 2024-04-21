@@ -4,7 +4,7 @@ using ServerApp.Logic.Stores.Filters;
 namespace ServerApp.DataBase.Repository;
 
 public class UserRepository(ApplicationContext dbContext) {
-    public async Task<bool> UpdateRefresh(User user) {
+    public async Task<bool> UpdateRefreshAsync(User user) {
         var res = dbContext.Users.FirstOrDefault(usr => usr.Id == user.Id);
         if (res == null) {
             return false;

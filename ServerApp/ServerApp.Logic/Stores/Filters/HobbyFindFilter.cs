@@ -2,6 +2,6 @@
 
 public enum HobbyFindFilter {
     Id,
+    Name,
 }
-
 

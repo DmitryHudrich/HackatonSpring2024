@@ -4,13 +4,14 @@ using ServerApp.Logic.Stores.Filters;
 namespace ServerApp.Logic.Stores;
 
 public interface IHobbyService {
-    Task<IReadOnlyList<Hobby>> GetByFilterAsync<T>(HobbyFindFilter filter, T request);
-    Task ChangeName(Hobby hobby, string newName);
-    Task Remove(Hobby hobby);
-    Task<bool> Add(Hobby hobby);
+    Task<IInteractResult<IReadOnlyList<Hobby>>> GetByFilterAsync<T>(HobbyFindFilter filter, T request);
+    Task<IInteractResult> ChangeName(Hobby activityType, string newName);
+    Task<IInteractResult> Remove(Hobby activityType);
+    Task<IInteractResult> AddAsync(Hobby activityType);
 
-    Task<bool> Link(Hobby hobby, ActivityType activityType);
-    Task<bool> Unink(Hobby hobby, ActivityType activityType);
+    Task<IInteractResult> Link(ActivityType activityType, Hobby hobby);
+    Task<IInteractResult> Unlink(ActivityType activity, Hobby hobby);
+    Task<IInteractResult<IList<Hobby>>> GetAll();
 }
 
 

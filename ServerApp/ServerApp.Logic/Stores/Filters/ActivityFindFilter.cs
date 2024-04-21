@@ -6,5 +6,6 @@ public enum ActivityFindFilter {
     Hobby,
     Age,
     WorkingTime,
+    Name
 }
 

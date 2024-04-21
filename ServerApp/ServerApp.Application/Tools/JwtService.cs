@@ -52,7 +52,7 @@ public sealed class JwtService(ILogger<JwtService> logger, UserRepository reposi
 
         user.RefreshTokenData = refresh.Token;
         user.RefreshTokenExpiration = refresh.Expiration;
-        _ = await repository.UpdateRefresh(user);
+        _ = await repository.UpdateRefreshAsync(user);
 
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }

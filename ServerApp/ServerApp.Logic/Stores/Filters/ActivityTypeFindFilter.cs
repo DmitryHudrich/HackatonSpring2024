@@ -2,6 +2,7 @@
 
 public enum ActivityTypeFindFilter {
     Id,
+    Name
 }
 
 

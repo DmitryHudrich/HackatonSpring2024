@@ -1,8 +1,8 @@
 ﻿using ServerApp.Api.DataTransferObjects.Request;
 using ServerApp.Api.DataTransferObjects.Response;
 using ServerApp.Api.Stuff;
-using ServerApp.Application.Services;
 using ServerApp.Logic.Stores;
+
 namespace ServerApp.Api;
 
 internal static class RouteManager {
@@ -13,6 +13,7 @@ internal static class RouteManager {
 
         Auth();
         User();
+
     }
 
     public static void Auth() {
@@ -29,7 +30,7 @@ internal static class RouteManager {
         _ = app.MapPost("/auth/login", async (HttpContext context, LoginRequest dto, IAuthService authService) => {
             var res = await authService.Login(context, dto.Login, dto.Password);
             return res.Success
-                ? Results.Ok(res.Value) :
+                ? Results.Ok(res) :
                 Results.StatusCode(403);
         }).WithOpenApi(operation => new(operation) {
             Summary = "Login user with login and password",
@@ -39,7 +40,7 @@ internal static class RouteManager {
         _ = app.MapGet("/auth/refresh", async (HttpContext context, IAuthService authService) => {
             var res = await authService.Refresh(context);
             return res.Success
-                ? Results.Ok(res.Value)
+                ? Results.Ok(res)
                 : Results.StatusCode(403);
         })
             .WithOpenApi(operation => new(operation) {
