@@ -8,6 +8,11 @@ using ServerApp.Logic.Stores;
 namespace ServerApp.Application.Services;
 
 public class UserAuth(ApplicationContext dbContext, JwtService jwtService) : IAuthService {
+    public Task<IInteractResult> Refresh(HttpContext httpContext) {
+        // var user = dbContext.Users.FirstOrDefault(u => u.Login == httpContext.User.)
+        throw new NotImplementedException();
+    }
+
     public Task<IInteractResult<RegistrationResult>> Register(string login, string password) {
         throw new NotImplementedException();
     }

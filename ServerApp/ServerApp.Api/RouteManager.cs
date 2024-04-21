@@ -31,6 +31,7 @@ internal static class RouteManager {
         }).Produces<SuccessLoginResponse>();
 
         _ = app.MapGet("/auth/refresh", (HttpContext context) => {
+            var refreshToken = context.Request.Cookies["X-Refresh"];
 
         })
             .WithOpenApi(operation => new(operation) {
