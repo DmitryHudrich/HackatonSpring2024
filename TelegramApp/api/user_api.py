@@ -31,5 +31,4 @@ class UserService:
             raise requests.ConnectionError("Не удалось зарегистрировать/авторизировать пользователя")
         except Exception as ex:
             logging.critical(msg=ex)
-            request.close()
             return False

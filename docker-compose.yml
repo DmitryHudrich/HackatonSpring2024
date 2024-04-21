@@ -19,9 +19,23 @@ services:
       - 5432:5432
 
   serverapp:
+    container_name: serverapp
     build: ServerApp/
     environment:
       - PROD_CONTAINER=PROD
     ports:
       - 1488:8080
+    depends_on:
+      - postgres
+    
+  telegrambot:
+    build: TelegramApp/
+    environment:
+      - API_URL=http://serverapp:1488/
+      - TELEGRAM_API=6422029665:AAFV_b1BagIkrfVTTbRs2c0LtVmXGFFzXfY
+      - ISCONTAINER=TRUE
+    ports:
+      - "3399:3399"
+    depends_on:
+      - serverapp
 
