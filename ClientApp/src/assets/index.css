@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  @import "./fonts.css";
+  @import './fonts.css';
   /* @import "./reset.css"; */
   :root {
     --background: #fff;
@@ -15,7 +15,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --card: #fff;;
+    --card: #fff;
     --card-foreground: 240 10% 3.9%;
 
     --border: 240 5.9% 90%;
@@ -80,8 +80,8 @@
 }
 
 :root {
-  --main-gradient: linear-gradient(to right, #FA5560, #B14BF4);
-  --reg-button-gradient: linear-gradient(to right, #A4C779, #A9D4AD, #C7DCD3);
-  --active-gradient: linear-gradient(to right, #073BB6, #73C7CF);
-  --not-active-gradient: linear-gradient(to right, #181A1E, #373A40, #484C56);
+  --main-gradient: linear-gradient(to right, #fa5560, #b14bf4);
+  --reg-button-gradient: linear-gradient(to right, #a4c779, #a9d4ad, #c7dcd3);
+  --active-gradient: linear-gradient(to right, #073bb6, #73c7cf);
+  --not-active-gradient: linear-gradient(to right, #181a1e, #373a40, #484c56);
 }

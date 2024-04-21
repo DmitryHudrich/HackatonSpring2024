@@ -1,13 +1,13 @@
 <template>
   <div class="block" v-if="friends">
     <div class="list" v-for="friend in friends" :key="friend.id">
-      <FriendListItem  />
+      <NewFriendListItem  />
     </div>
   </div>
 </template>
 
 <script setup>
-import FriendListItem from './FriendListItem.vue';
+import NewFriendListItem from './NewFriendListItem.vue';
 // const friends = ref([]);
 </script>
 

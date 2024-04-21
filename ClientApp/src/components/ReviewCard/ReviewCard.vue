@@ -1,9 +1,9 @@
 <template>
   <Card class="w-[30%]">
-    <CardHeader> 
-      <img src="" alt="аватарка" class="image">
+    <CardHeader>
+      <img src="" alt="аватарка" class="image" />
     </CardHeader>
-    <CardContent> 
+    <CardContent>
       <p>текст отзыва</p>
     </CardContent>
     <CardFooter>
@@ -22,11 +22,10 @@ import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
 .username {
   font-size: 20px;
 }
-.image{
+.image {
   width: 90%;
   aspect-ratio: 16 / 12;
   border-radius: 12px;
-  object-fit:cover;
-
+  object-fit: cover;
 }
 </style>

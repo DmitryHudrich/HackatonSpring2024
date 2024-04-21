@@ -1,5 +1,5 @@
 <script setup></script>
 
-<template>user</template>
+<template></template>
 
 <style scoped></style>

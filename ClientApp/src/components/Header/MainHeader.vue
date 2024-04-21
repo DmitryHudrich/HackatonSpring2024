@@ -1,25 +1,25 @@
 <script setup>
 import HeaderNavigation from './HeaderNavigation.vue'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 </script>
 <template>
   <div class="header">
-    <img src="@/assets/image/GroupGo.svg" alt="logo" @click="router.push('/')"/>
-    <HeaderNavigation/>
+    <img src="@/assets/image/GroupGo.svg" alt="logo" @click="router.push('/')" />
+    <HeaderNavigation />
     <div class="header__button_user" v-if="true">
-      <router-link to = '/register'>
+      <router-link to="/register">
         <button class="header__button_user_button">Зарегестрироваться</button>
-      </router-link>  
+      </router-link>
     </div>
     <div class="header__user_info" v-else>
-      <router-link to = '/profile'>
+      <router-link to="/profile">
         <div class="header__user_login"></div>
         <div class="header__user_photo"></div>
       </router-link>
     </div>
-  </div> 
+  </div>
 </template>
 
 <style scoped>

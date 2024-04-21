@@ -25,7 +25,9 @@ onMounted(async () => {
     <div class="container">
       <button @click="switchTheme()">theme</button>
       <Header v-show="!excludeRoutesList.includes(currentRoute)" />
-      <router-view></router-view>
+      <div class="content">
+        <router-view></router-view>
+      </div>
       <Footer v-if="!(currentRoute === 'map')" />
     </div>
   </div>
@@ -34,10 +36,19 @@ onMounted(async () => {
 <style scoped>
 #app {
   background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
 }
-
+.content {
+  flex-grow: 1;
+}
 .container {
   margin-left: 80px;
   margin-right: 80px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 </style>
