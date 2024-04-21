@@ -16,7 +16,7 @@ class UserService:
         """
             Returns user token
         """
-        
+
         try:
             request = self.session_req.post(
                 url=self.__api_url + "auth/registration/telegram",
@@ -25,7 +25,7 @@ class UserService:
 
             if request.status_code in (200, 201):
                 return True
-            raise requests.ConnectionError
+            raise requests.ConnectionError("Не удалось зарегистрировать/авторизировать пользователя")
         except Exception as ex:
             logging.critical(msg=ex)
             request.close()

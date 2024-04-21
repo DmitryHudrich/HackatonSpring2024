@@ -3,6 +3,8 @@ from typing import Callable, Dict, Any, Awaitable
 from aiogram import types
 from models.UserModels import RegistrationUser
 from api.user_api import UserService
+from aiogram.exceptions import AiogramError
+from exceptions.bot_exception import DetailedAiogramError
 import logging
 
 
@@ -36,5 +38,9 @@ class AuthenticationUser(BaseMiddleware):
 
         user_service: UserService = UserService()
         result = user_service.get_user_token(user=user_reg_info)
-        print(result)
+        
+        if result:
+            pass
+        else:
+            return DetailedAiogramError(message="Ошибка аутентификации пользователя")
         

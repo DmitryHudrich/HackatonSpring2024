@@ -1,8 +1,14 @@
 ﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 using ServerApp.Api;
 using ServerApp.Application;
-
+using ServerApp.Application.Services;
+using ServerApp.Application.Tools;
+using ServerApp.DataBase;
+using ServerApp.DataBase.Repository;
+using ServerApp.Logic.Stores;
 
 System.Console.WriteLine(System.Environment.GetEnvironmentVariable("PROD_CONTAINER"));
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-Application.SetServices(builder.Services);
 
+// Application.SetServices(ref builder.Services);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
     options.SwaggerDoc("v1", new OpenApiInfo {
@@ -34,12 +40,23 @@ builder.Services.AddSwaggerGen(options => {
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
+// закостыляли малеха не смогли разобраться 
+builder.Services.AddNpgsql<ApplicationContext>(
+        //"Host=172.21.0.3;Port=5432;Database=usersdb;Username=postgres;Password=12345",
+        "Host=hackatonspring2024-postgres-1;Port=5432;Database=usersdb;Username=postgres;Password=12345",
+        builder =>
+        builder.UseNetTopologySuite());
+
+_ = builder.Services.AddScoped<UserRepository>();
+_ = builder.Services.AddScoped<JwtService>();
+_ = builder.Services.AddScoped<IAuthService, UserAuth>();
+
 builder.Services.AddCors();
+builder.Services.AddLogging();
 
 var app = builder.Build();
 
 var core = new Application(app.Services);
-
 app.UseCors(options => {
     _ = options.AllowAnyHeader();
     _ = options.AllowAnyMethod();

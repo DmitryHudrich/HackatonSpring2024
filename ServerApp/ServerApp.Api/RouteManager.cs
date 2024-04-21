@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ServerApp.Api.DataTransferObjects.Request;
+﻿using ServerApp.Api.DataTransferObjects.Request;
 using ServerApp.Api.DataTransferObjects.Response;
 using ServerApp.Api.Stuff;
+using ServerApp.Application.Services;
+using ServerApp.Logic.Stores;
 namespace ServerApp.Api;
 
 internal static class RouteManager {
@@ -15,42 +16,49 @@ internal static class RouteManager {
     }
 
     public static void Auth() {
-        _ = app.MapPost("/auth/registration", (RegistrationRequest dto) => {
-
+        _ = app.MapPost("/auth/registration", async (RegistrationRequest dto, IAuthService authService) => {
+            var res = await authService.Register(dto.Login, dto.Password, dto.FirstName, dto.LastName, dto.Bio, dto.PhotoBase64);
+            return res.Success
+                ? Results.StatusCode(201)
+                : Results.StatusCode(403);
         }).WithOpenApi(operation => new(operation) {
             Summary = "Register user with login and password",
             Description = "201 - if user created \n403 - otherwise"
         });
 
-        _ = app.MapPost("/auth/login", (LoginRequest dto) => {
-            return Results.NotFound(new SuccessLoginResponse("TOKEN"));
+        _ = app.MapPost("/auth/login", async (HttpContext context, LoginRequest dto, IAuthService authService) => {
+            var res = await authService.Login(context, dto.Login, dto.Password);
+            return res.Success
+                ? Results.Ok(res.Value) :
+                Results.StatusCode(403);
         }).WithOpenApi(operation => new(operation) {
             Summary = "Login user with login and password",
             Description = $"200 - succes login and return\n403 - wrong password\n 400 - otherwise. With 200 sends jwt token in body and refresh token in cookie '{Constants.REFRESH_COOKIE}'"
-        });
+        }).Produces<SuccessLoginResponse>();
 
-        _ = app.MapGet("/auth/refresh", () => Results.NotFound(new SuccessLoginResponse("TOKEN")))
+        _ = app.MapGet("/auth/refresh", async (HttpContext context, IAuthService authService) => {
+            var res = await authService.Refresh(context);
+            return res.Success
+                ? Results.Ok(res.Value)
+                : Results.StatusCode(403);
+        })
             .WithOpenApi(operation => new(operation) {
                 Summary = "Refreshes jwt",
                 Description = "200 - success; 403 - otherwise. With 200 sends jwt token in body and refresh token in cookie '{Constants.REFRESH_COOKIE}'"
-            });
+            })
+            .Produces<SuccessLoginResponse>();
 
-        _ = app.MapPost("/auth/registration/telegram", (TelegramRegistrationRequest dto) => Results.NotFound(new TelegramRegistrationRequest(0)))
+        _ = app.MapPost("/auth/registration/telegram", async (HttpContext context, TelegramRegistrationRequest dto, IAuthService authService) => {
+            var res = await authService.RegisterTelegram(context, dto.TelegramId, dto.FirstName, dto.LastName, dto.Bio, dto.PhotoBase64);
+            return res;
+        })
             .WithOpenApi(operation => new(operation) {
                 Summary = "Register user with telegram id",
                 Description = $"always 200. sends jwt in body in refresh in {Constants.REFRESH_COOKIE} cookie"
-            });
+            })
+            .Produces<TelegramRegistrationRequest>();
+
         _ = app.MapPut("/auth/sync/telegram", (TelegramSyncRequest dto) => Results.NoContent());
-
-        //
-        _ = app.MapGet("/forswagger/dont/send/this/anywhere", (
-                    [FromBody] SuccessLoginResponse one
-                    ) => Results.NotFound());
-
-        //
-        _ = app.MapGet("/forswagger/dont/send/this/anywhere/q", (
-                    [FromBody] FriendsResponse one
-                    ) => Results.NotFound());
     }
 
     public static void User() {

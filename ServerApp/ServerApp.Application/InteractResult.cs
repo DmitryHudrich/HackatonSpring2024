@@ -1,6 +1,8 @@
-﻿namespace ServerApp.Application;
+﻿using ServerApp.Logic;
 
-public record class InteractResult<T>(bool Success, T? Data = default, string? Error = default) {
-    public static explicit operator T?(InteractResult<T> res) => res.Data ?? default;
+namespace ServerApp.Application;
+
+public record class InteractResult<T>(bool Success, T? Value = default, string? ErrorMessage = default) : IInteractResult<T> {
+    public static explicit operator T?(InteractResult<T> res) => res.Value ?? default;
 };
-public record class InteractResult(bool Success, string? Error = default);
+public record class InteractResult(bool Success, string? ErrorMessage = default) : IInteractResult;

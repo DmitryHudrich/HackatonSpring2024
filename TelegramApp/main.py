@@ -17,6 +17,7 @@ bot: Bot = Bot(settings.telegram_api)
 storage: MemoryStorage = MemoryStorage()
 dp: Dispatcher = Dispatcher(bot=bot, storage=storage)
 
+
 async def stop_application():
     """
         Stop application
@@ -40,9 +41,9 @@ async def start_application():
 
     #Settings
     try:
-        await set_bot_name(bot=bot)
         await set_commands_on_bot(bot=bot)
         await set_description_on_bot(bot=bot)
+        await set_bot_name(bot=bot)
         await set_photo_on_bot(bot=bot)
     except Exception as ex:
         logging.info(msg="Ошибка с установлением настроек для бота")
@@ -51,14 +52,14 @@ async def start_application():
     await bot.delete_webhook(drop_pending_updates=True)
 
     #Include middleware
-    dp.message.middleware.register(AuthenticationUser())
+    #dp.message.middleware.register(AuthenticationUser())
     dp.message.middleware.register(Throtling())
 
     try:
         logging.basicConfig(level=logging.INFO)
         await dp.start_polling(bot)
     except KeyboardInterrupt as kb:
-        logging.critical(msg="Бот окончил своб работу")
+        logging.critical(msg="Бот окончил свою работу")
     finally:
         await dp.stop_polling()
 

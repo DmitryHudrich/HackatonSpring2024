@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServerApp.Logic.Entities;
 
 namespace ServerApp.DataBase;
@@ -13,7 +14,13 @@ public class ApplicationContext : DbContext {
     public DbSet<Visit> Visites { get; set; } = null!;
     public DbSet<Route> Routes { get; set; } = null!;
 
-    public ApplicationContext() {
+    // public ApplicationContext() {
+    //     _ = Database.EnsureCreated();
+    // }
+
+    public ApplicationContext(DbContextOptions<ApplicationContext> options)
+    : base(options) {
+
         _ = Database.EnsureCreated();
     }
 
@@ -26,16 +33,9 @@ public class ApplicationContext : DbContext {
         _ = modelBuilder.Entity<User>(
             builder => {
                 _ = builder.ComplexProperty(user => user.AuthInfo);
-            });
-
-        _ = modelBuilder.Entity<User>(
-                builder => {
-                    _ = builder.ComplexProperty(user => user.UserInfo);
-                });
-
-        _ = modelBuilder.Entity<User>(
-            builder => {
                 _ = builder.Property(b => b.RegistrationDate).HasColumnType("timestamp(6)");
+
+                _ = builder.ComplexProperty(user => user.UserInfo);
             });
 
         _ = modelBuilder.Entity<Reviews>(
@@ -70,13 +70,13 @@ public class ApplicationContext : DbContext {
             .WithMany(u => u.FriendRecievers);
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-        _ = optionsBuilder.UseNpgsql(@"
-            Host = localhost;
-            Port = 5432;
-            Database = usersdb;
-            Username = postgres;
-            Password = 12345
-        ", x => x.UseNetTopologySuite());
-    }
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+    //     _ = optionsBuilder.UseNpgsql(@"
+    //         Host = hackatonspring2024-postgres-1;
+    //         Port = 5432;
+    //         Database = usersdb;
+    //         Username = postgres;
+    //         Password = 12345
+    //     ", x => x.UseNetTopologySuite());
+    // }
 }

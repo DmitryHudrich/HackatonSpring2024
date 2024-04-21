@@ -265,7 +265,7 @@ namespace ServerApp.DataBase.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
                         .HasColumnType("integer");
 
                     b.Property<string>("Login")
@@ -275,13 +275,18 @@ namespace ServerApp.DataBase.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PhotoBase64")
-                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("RefreshTokenData")
+                        .HasColumnType("text");
+
+                    b.Property<TimeSpan>("RefreshTokenExpiration")
+                        .HasColumnType("interval");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("timestamp(6)");
 
-                    b.Property<long>("RoleId")
+                    b.Property<long?>("RoleId")
                         .HasColumnType("bigint");
 
                     b.Property<Point>("SearchGeoposition")
@@ -308,7 +313,10 @@ namespace ServerApp.DataBase.Migrations
                             b1.Property<string>("Bio")
                                 .HasColumnType("text");
 
-                            b1.Property<string>("Name")
+                            b1.Property<string>("FirstName")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("LastName")
                                 .HasColumnType("text");
                         });
 
@@ -442,9 +450,7 @@ namespace ServerApp.DataBase.Migrations
                 {
                     b.HasOne("ServerApp.Logic.Entities.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoleId");
 
                     b.Navigation("Role");
                 });
